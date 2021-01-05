@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { timelineStyles, colors } from './Styles';
 import { getDataModel } from './DataModel';
 
-export class TimelineScreen extends React.Component {
+export class Timeline extends React.Component {
   constructor(props) {
     super(props);
 
@@ -53,7 +53,7 @@ export class TimelineScreen extends React.Component {
                 return(
                   <TouchableOpacity 
                     style={timelineStyles.listDiveContainer}
-                    onPress={()=>{this.props.navigation.navigate("Dive", {
+                    onPress={()=>{this.props.navigation.navigate("DiveAddEdit", {
                       operation: "edit",
                       dive: item})
                     }}
@@ -80,7 +80,7 @@ export class TimelineScreen extends React.Component {
 
         <View style={timelineStyles.footer}>
           <TouchableOpacity
-            onPress={()=>{this.props.navigation.navigate("Dive", {
+            onPress={()=>{this.props.navigation.navigate("DiveAddEdit", {
               operation: "add",
               diver: this.userKey})
             }}>

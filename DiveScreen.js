@@ -4,56 +4,58 @@ import { TextInput, Text, View, TouchableOpacity } from 'react-native';
 import { diveStyles } from './Styles';
 import { getDataModel } from './DataModel';
 
-export class DiveScreen extends React.Component {
+export class DiveAddEdit extends React.Component {
   constructor(props) {
     super(props);
 
     this.dataModel = getDataModel();
     this.operation = this.props.route.params.operation;
 
-    let diver = ''; 
-    let key = '';
-    let day = '';
-    let diveSite = '';
-    let country = '';
-    if (this.operation === 'edit') {
-      diver = this.props.route.params.dive.diver;
-      key = this.props.route.params.dive.key;
-      day = this.props.route.params.dive.day;
-      diveSite = this.props.route.params.dive.diveSite;
-      country = this.props.route.params.dive.country;
-    } else { // this.operation === 'add'
-      diver = this.props.route.params.diver;
+    if (this.operation === 'add') {
+      this.dive = {
+        country: '',
+        diver: this.props.route.params.diver,
+        diveSite: '',
+        gas: '',
+        location: '',
+        notes: '',
+        pictureURL: '',
+        maxDepth: 0,
+        pictureHeight: 0,
+        pictureWidth: 0,
+        rating: 0,
+        tempBottom: 0,
+        tempSurface: 0,
+        totalTime: 0,
+        weights: 0,
+        favorite: false,
+
+        day: '', // FLAG
+        time: '', // FLAG
+        // start: ???, // timestamp, Date.now(), October 11, 2020 at 12:34:00 PM UTC-5 - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
+
+        latitude: 0, // FLAG
+        longitude: 0, // FLAG
+        // coordinates: ???, // geopoint, [41.0153513° N, 83.9355813° W] 
+      }
+    }
+
+    else { // === 'edit'
+      this.dive = this.props.route.params.dive;
     }
 
     this.state = {
-      diver: diver,
-      key: key,
-      day: day,
-      diveSite: diveSite,
-      country: country
+      dive: this.dive
     }
   }
-  
+
   async onSave() {
     if (this.operation === 'add') {
-      await this.dataModel.addDive(
-        this.state.diver,
-        this.state.day,
-        this.state.diveSite,
-        this.state.country
-      );
+      await this.dataModel.addDive(this.state.dive);
     }
 
-    else { // operation === 'edit'
-      await this.dataModel.editDive(
-        this.state.key,
-
-        this.state.diver,
-        this.state.day,
-        this.state.diveSite,
-        this.state.country
-      );
+    else { // === 'edit'
+      await this.dataModel.editDive(this.state.dive);
     }
 
     this.props.navigation.navigate("Timeline");
@@ -73,6 +75,21 @@ export class DiveScreen extends React.Component {
           </View> */}
 
           <View style={diveStyles.fieldsContainer}>
+
+{/* gas: '',
+location: '',
+notes: '',
+maxDepth: 0,
+rating: 0,
+tempBottom: 0,
+tempSurface: 0,
+totalTime: 0,
+weights: 0,
+favorite: false,
+time: '',
+latitude: 0,
+longitude: 0, */}
+
             <View style={diveStyles.fieldRow}>
               <Text style={diveStyles.fieldLabel}>
                 Day:
@@ -82,12 +99,15 @@ export class DiveScreen extends React.Component {
                 style={diveStyles.fieldBox}
 
                 placeholder="MM.DD.YYYY"
+                // defaultValue={this.today} // FLAG
                 keyboardType="numeric"
                 autoCorrect={false}
 
-                value={this.state.day}
+                value={this.state.dive.day}
 
-                onChangeText={(text) => this.setState({day: text})}
+                onChangeText={(text) => {let dive = this.state.dive;
+                                        dive.day = text;
+                                        this.setState({dive: dive})}}
               />
             </View>
 
@@ -102,9 +122,11 @@ export class DiveScreen extends React.Component {
                 autoCapitalize="words"
                 autoCorrect={true}
 
-                value={this.state.diveSite}
+                value={this.state.dive.diveSite}
 
-                onChangeText={(text) => this.setState({diveSite: text})}
+                onChangeText={(text) => {let dive = this.state.dive;
+                                        dive.diveSite = text;
+                                        this.setState({dive: dive})}}
               />
             </View>
 
@@ -119,9 +141,11 @@ export class DiveScreen extends React.Component {
                 autoCapitalize="words"
                 autoCorrect={true}
 
-                value={this.state.country}
+                value={this.state.dive.country}
 
-                onChangeText={(text) => this.setState({country: text})}
+                onChangeText={(text) => {let dive = this.state.dive;
+                                        dive.country = text;
+                                        this.setState({dive: dive})}}
               />
             </View>
           </View>

@@ -48,7 +48,7 @@ class DataModel {
     return this.users;
   }
 
-  getDives = (userKey) => {
+  getDives = (userKey) => { // only of current user
     let divesFromUser = [];
     for (let dive of this.dives) {
       if (dive.diver === userKey) {
@@ -59,17 +59,16 @@ class DataModel {
   }
 
   addUser = async (email, pass, dispName) => {
-    // assemble the data structure
     let newUser = {
       email: email,
       password: pass,
       displayName: dispName
     }
 
-    // add the data to Firebase (user collection)
+    // add data to FB
     let newUserDocRef = await this.usersRef.add(newUser);
 
-    // get the new Firebase ID and save it as the local "key"
+    // get new FB ID and add to app data model
     let key = newUserDocRef.id;
     newUser.key = key;
     this.users.push(newUser);
@@ -77,59 +76,46 @@ class DataModel {
     return newUser;
   }
 
-  addDive = async (diver, day, diveSite, country) => {
-    // assemble the data structure
-    let newDive = {
-      diver: diver,
-      day: day,
-      diveSite: diveSite,
-      country: country
-    }
-    
-    // add the data to Firebase (dives collection)
+  addDive = async (newDive) => {
+    // add data to FB
     let newDiveDocRef = await this.divesRef.add(newDive);
 
-    // get the new Firebase ID and save it as the local "key"
+    // get new FB ID and add to app data model
     let key = newDiveDocRef.id;
     newDive.key = key;
     this.dives.push(newDive);
   }
 
-  editDive = async (diveKey, diver, day, diveSite, country) => {
-    // assemble the data structure
-    let editedDive = {
-      diver: diver,
-      day: day,
-      diveSite: diveSite,
-      country: country
-    }
+  editDive = async (editedDive) => { // FLAG - review simplification and test
+    // update FB
+    let editedDiveDocRef = this.divesRef.doc(editedDive.key);
+    let editedDiveWithoutKey = editedDive;
+    delete editedDiveWithoutKey.key;
+    await editedDiveDocRef.update(editedDiveWithoutKey); // set?
 
-    // updates Firebase
-    let editedDiveDocRef = this.divesRef.doc(diveKey);
-    await editedDiveDocRef.update(editedDive);
-
-    // updates app data model
+    // update app data model
     let divesList = this.dives;
     let foundIndex = -1;
     for (let idx in divesList) {
-      if (divesList[idx].key === diveKey) {
+      if (divesList[idx].key === editedDive.key) {
         foundIndex = idx;
         break;
       }
     }
-    if (foundIndex !== -1) { // silently fail if item not found
-      editedDive.key = diveKey;
+    
+    // silently fail if item not found
+    if (foundIndex !== -1) {
       divesList[foundIndex] = editedDive;
       this.dives = divesList;
     }
   }
 
   deleteDive = async (diveKey) => {
-    // deletes from FB
+    // delete from FB
     let docRef = this.divesRef.doc(diveKey);
     await docRef.delete();
 
-    // deletes from app data model
+    // delete from app data model
     let foundIndex = -1;
     for (let idx in this.dives) {
       if (this.dives[idx].key === diveKey) {
@@ -137,27 +123,28 @@ class DataModel {
         break;
       }
     }
-    if (foundIndex !== -1) { // silently fail if item not found
-      this.dives.splice(foundIndex, 1); // remove one element 
+
+    // silently fail if item not found
+    if (foundIndex !== -1) {
+      this.dives.splice(foundIndex, 1);
     }
   }
 
-  addDivePicture = async (diveKey, pictureObject) => { // not finished FLAG
-    // set up storage ref and file name
+  addDivePicture = async (diveKey, pictureObject) => { // FLAG - not finished
     let fileName = diveKey;
     let pictureRef = this.storageRef.child(fileName);
 
-    // fetch the picture object from the local filesystem
+    // fetch picture object from the local filesystem
     let response = await fetch(pictureObject.uri);
     let pictureBlob = await response.blob();
 
-    // upload it to Firebase Storage
+    // upload to FB Storage
     await pictureRef.put(pictureBlob);
 
     // get picture URL
     let downloadURL = await pictureRef.getDownloadURL();
     
-    // update dive with picture and store in Firebase
+    // update dive with picture and store in FB
     let diveRef = this.divesRef.doc(diveKey);
     await diveRef.update({
       pictureURL: downloadURL,

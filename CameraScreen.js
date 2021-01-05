@@ -8,7 +8,7 @@ import { getDataModel } from './DataModel';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 
-export class CameraScreen extends React.Component {
+export class Camera extends React.Component {
   constructor(props) {
     super(props);
 
@@ -59,7 +59,7 @@ export class CameraScreen extends React.Component {
             style={cameraStyles.container}
 
             type={this.state.type}
-            ratio='4:3'
+            ratio='4:3' // FLAG - stretched image problem
             pictureSize='Medium'
             ref={this.setupCamera}
           >

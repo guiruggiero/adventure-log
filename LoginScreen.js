@@ -4,7 +4,7 @@ import { TextInput, Text, View, Image, TouchableOpacity, KeyboardAvoidingView, A
 import { loginStyles } from './Styles';
 import { getDataModel } from './DataModel';
 
-export class LoginScreen extends React.Component {
+export class Login extends React.Component {
   constructor(props) {
     super(props);
 
@@ -20,10 +20,11 @@ export class LoginScreen extends React.Component {
   }
 
   onCreateAccount = async () => {
-    // check that this is a valid email (skipping this)
-    // check password rules (skipping this)
-    // check that passwords match (skipping this)
-    // check that displayName isn't empty (skipping this)
+    // pending:
+    // check that this is a valid email
+    // check password rules
+    // check that passwords match
+    // check that displayName isn't empty
 
     // check that user doesn't already exist
     let users = this.dataModel.getUsers();
@@ -40,7 +41,7 @@ export class LoginScreen extends React.Component {
       } 
     }
     
-    // made it through loop, no user exists!
+    // if user doesn't exists
     let newUser = await this.dataModel.addUser(
       this.state.emailInput,
       this.state.passwordInput,
@@ -59,7 +60,7 @@ export class LoginScreen extends React.Component {
 
     for (let user of users) {
       if (user.email === email) {
-        if (user.password === pass) { // success!
+        if (user.password === pass) {
           this.props.navigation.navigate("Timeline", {
             currentUser: user
           });
@@ -69,7 +70,7 @@ export class LoginScreen extends React.Component {
       }
     }
 
-    // we got through all the users with no match, so failure
+    // no user match
     Alert.alert(
       'Login failed',
       'No match found for this email and password',
