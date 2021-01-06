@@ -48,10 +48,10 @@ class DataModel {
     return this.users;
   }
 
-  getDives = (userKey) => { // only of current user
+  getDives = (userKey) => {
     let divesFromUser = [];
     for (let dive of this.dives) {
-      if (dive.diver === userKey) {
+      if (dive.diver === userKey) { // only of current user
         divesFromUser.push(dive);
       }
     }
@@ -86,13 +86,13 @@ class DataModel {
     this.dives.push(newDive);
   }
 
-  editDive = async (editedDive) => { // FLAG - review simplification and test
+  editDive = async (editedDive) => {
     // update FB
     let editedDiveDocRef = this.divesRef.doc(editedDive.key);
-    let editedDiveWithoutKey = editedDive;
+    let editedDiveWithoutKey = {...editedDive};
     delete editedDiveWithoutKey.key;
-    await editedDiveDocRef.update(editedDiveWithoutKey); // set?
-
+    await editedDiveDocRef.update(editedDiveWithoutKey);
+    
     // update app data model
     let divesList = this.dives;
     let foundIndex = -1;
@@ -102,7 +102,7 @@ class DataModel {
         break;
       }
     }
-    
+
     // silently fail if item not found
     if (foundIndex !== -1) {
       divesList[foundIndex] = editedDive;

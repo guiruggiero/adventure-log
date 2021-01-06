@@ -105,9 +105,7 @@ longitude: 0, */}
 
                 value={this.state.dive.day}
 
-                onChangeText={(text) => {let dive = this.state.dive;
-                                        dive.day = text;
-                                        this.setState({dive: dive})}}
+                onChangeText={(text) => this.setState({dive: {...this.state.dive, day: text}})}
               />
             </View>
 
@@ -124,9 +122,7 @@ longitude: 0, */}
 
                 value={this.state.dive.diveSite}
 
-                onChangeText={(text) => {let dive = this.state.dive;
-                                        dive.diveSite = text;
-                                        this.setState({dive: dive})}}
+                onChangeText={(text) => this.setState({dive: {...this.state.dive, diveSite: text}})}
               />
             </View>
 
@@ -143,9 +139,7 @@ longitude: 0, */}
 
                 value={this.state.dive.country}
 
-                onChangeText={(text) => {let dive = this.state.dive;
-                                        dive.country = text;
-                                        this.setState({dive: dive})}}
+                onChangeText={(text) => this.setState({dive: {...this.state.dive, country: text}})}
               />
             </View>
           </View>
