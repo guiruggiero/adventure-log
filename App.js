@@ -20,7 +20,7 @@ import { DiveAddEdit } from './DiveScreen';
 // import { JumpView } from './JumpScreen';
 // import { JumpAddEdit } from './JumpScreen';
 
-// import { Camera } from './CameraScreen';
+// import { Cam } from './CameraScreen';
 
 // import { Stats } from './StatsScreen';
 

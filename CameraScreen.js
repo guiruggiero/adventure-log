@@ -8,7 +8,7 @@ import { getDataModel } from './DataModel';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 
-export class Camera extends React.Component {
+export class Cam extends React.Component {
   constructor(props) {
     super(props);
 
