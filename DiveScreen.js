@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextInput, Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, Platform, TextInput, TouchableOpacity, Alert, Switch } from 'react-native';
 
 import { diveStyles, timelineStyles } from './Styles';
 import { getDataModel } from './DataModel';
@@ -49,7 +49,38 @@ export class DiveAddEdit extends React.Component {
     }
   }
 
-  async onSave() {
+  onDelete = async (diveKey) => {
+    if (Platform.OS === 'web') {
+      let response = confirm("Whoa, slow down! This will delete the log forever");
+      if (response === true) {
+        await this.dataModel.deleteDive(diveKey);
+        this.props.navigation.navigate("Timeline");
+      }
+    }
+    
+    else { // if running on app, iOS or Android
+      Alert.alert(
+        'Whoa, slow down',
+        'This will delete the log forever',
+        [
+          {
+            text: 'Cancel',
+            style: 'cancel'
+          },
+          {
+            text: 'OK',
+            onPress: async () => {
+              await this.dataModel.deleteDive(diveKey);
+              this.props.navigation.navigate("Timeline");
+            }
+          }
+        ],
+        { cancelable: false }
+      );
+    }
+  }
+
+  onSave = async () => {
     if (this.operation === 'add') {
       await this.dataModel.addDive(this.state.dive);
     }
@@ -66,7 +97,7 @@ export class DiveAddEdit extends React.Component {
       <View style={diveStyles.container}>
         <View style={diveStyles.header}>
           <Text style={diveStyles.headerText}>
-            {this.operation === 'add'? "Add" : "Edit"}
+            {this.operation === 'add' ? "Add" : "Edit"}
           </Text>
         </View>
 
@@ -317,21 +348,15 @@ export class DiveAddEdit extends React.Component {
                 onChangeText={(text) => this.setState({dive: {...this.state.dive, rating: text}})}
               />
             </View>
-            
-            <View style={diveStyles.fieldRow}>
+
+            <View style={diveStyles.fieldRow}> {/* favorite */}
               <Text style={diveStyles.fieldLabel}>
                 Favorite:
               </Text>
-
-              <TextInput
-                style={diveStyles.fieldBox}
-
-                autoCapitalize="words"
-                autoCorrect={false}
-
+              
+              <Switch
                 value={this.state.dive.favorite}
-
-                onChangeText={(text) => this.setState({dive: {...this.state.dive, favorite: text}})}
+                onValueChange={(value) => this.setState({dive: {...this.state.dive, favorite: value}})}
               />
             </View>
 
@@ -363,6 +388,16 @@ export class DiveAddEdit extends React.Component {
             >
               <Text style={diveStyles.footerButtonText}>Cancel</Text>
             </TouchableOpacity>
+            
+            {this.operation === 'edit' ? (
+              <TouchableOpacity 
+                style={diveStyles.footerButton}
+
+                onPress={()=>{this.onDelete(this.dive.key)}}
+              >
+                <Text style={diveStyles.footerButtonText}>Delete</Text>
+              </TouchableOpacity>
+            ):(<View/>)}
 
             <TouchableOpacity
               style={diveStyles.footerButton}

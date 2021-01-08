@@ -21,7 +21,7 @@ export class Cam extends React.Component {
     };  
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.getPermissions();
   }
 

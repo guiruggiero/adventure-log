@@ -30,11 +30,10 @@ export class Login extends React.Component {
     let users = this.dataModel.getUsers();
     for (let user of users) {
       if (user.email === this.state.emailInput) {
-        
         Alert.alert(
           'Duplicate user',
           'User ' + this.state.emailInput + ' already exists',
-          [{text: 'OK',style: 'OK'}]
+          [{text: 'OK', style: 'OK'}]
         );
 
         return;
@@ -74,7 +73,7 @@ export class Login extends React.Component {
     Alert.alert(
       'Login failed',
       'No match found for this email and password',
-      [{text: 'OK',style: 'OK'}]
+      [{text: 'OK', style: 'OK'}]
     );
   }
 

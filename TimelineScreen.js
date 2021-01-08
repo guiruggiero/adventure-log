@@ -10,14 +10,15 @@ export class Timeline extends React.Component {
     super(props);
 
     this.dataModel = getDataModel();
-    this.userKey = this.props.route.params.currentUser.key;
-    
+    // this.userKey = this.props.route.params.currentUser.key
+    this.userKey = '9lnN5X4zdxeznPfWXp20'; // FLAG - testing
+
     this.state = {
       diveList: []
     }
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.focusUnsubscribe = this.props.navigation.addListener('focus', this.onFocus);
   }
 
@@ -28,13 +29,8 @@ export class Timeline extends React.Component {
     this.props.navigation.setParams({operation: 'none'});
   }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     this.focusUnsubscribe();
-  }
-
-  onDelete = async (diveKey) => {
-    await this.dataModel.deleteDive(diveKey);
-    this.onFocus();
   }
 
   render() {
@@ -62,14 +58,6 @@ export class Timeline extends React.Component {
                       <Text style={timelineStyles.listDiveText}>
                         {item.day} - {item.diveSite}, {item.country}
                       </Text> 
-                    </View>
-
-                    <View style={timelineStyles.listDiveButtonContainer}>
-                      <Ionicons name="md-trash" 
-                        size={24} 
-                        color={colors.primaryDark}
-
-                        onPress={()=>{this.onDelete(item.key)}} />
                     </View>
                   </TouchableOpacity>
                 );
