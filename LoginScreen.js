@@ -87,7 +87,6 @@ export class Login extends React.Component {
         <View style={loginStyles.topView}>
           <Image 
             source={require('./assets/logo.png')}
-
             style={loginStyles.logoImage}
           />
         </View>
@@ -100,15 +99,12 @@ export class Login extends React.Component {
 
             <TextInput
               style={loginStyles.inputText}
-
               keyboardType='email-address'
               autoCapitalize='none'
               autoCorrect={false}
               textContentType='emailAddress'
               autoCompleteType='email'
-
               value={this.state.emailInput}
-
               onChangeText={(text)=>{this.setState({emailInput: text})}}
             />
           </View>
@@ -121,14 +117,11 @@ export class Login extends React.Component {
 
               <TextInput
                 style={loginStyles.inputText}
-
                 autoCapitalize='words'
                 autoCorrect={false}
                 textContentType='name'
                 autoCompleteType='name'
-
                 value={this.state.displayNameInput}
-
                 onChangeText={(text)=>{this.setState({displayNameInput: text})}}
               />
             </View>
@@ -143,15 +136,12 @@ export class Login extends React.Component {
 
             <TextInput
               style={loginStyles.inputText}
-
               keyboardType='numeric'
               autoCapitalize='none'
               autoCorrect={false}
               textContentType='password'
               autoCompleteType='password'
-
               value={this.state.passwordInput}
-
               onChangeText={(text)=>{this.setState({passwordInput: text})}}
           />
 
@@ -164,15 +154,12 @@ export class Login extends React.Component {
 
               <TextInput
                 style={loginStyles.inputText}
-
                 keyboardType='numeric'
                 autoCapitalize='none'
                 autoCorrect={false}
                 textContentType='password'
                 autoCompleteType='off'
-
                 value={this.state.passwordCheckInput}
-
                 onChangeText={(text)=>{this.setState({passwordCheckInput: text})}}
               />
             </View>
@@ -185,7 +172,6 @@ export class Login extends React.Component {
           <View style={loginStyles.bottomView}>
             <TouchableOpacity 
               style={loginStyles.buttonContainer}
-
               onPress={()=>{this.setState({mode: 'create'})}}
               >
               <Text style={loginStyles.buttonText}>Create account</Text>
@@ -193,7 +179,6 @@ export class Login extends React.Component {
 
             <TouchableOpacity 
               style={loginStyles.buttonContainer}
-
               onPress={this.onLogin}
               >
               <Text style={loginStyles.buttonText}>Login</Text>
@@ -203,7 +188,6 @@ export class Login extends React.Component {
           <View style={loginStyles.bottomView}>
             <TouchableOpacity 
               style={loginStyles.buttonContainer}
-
               onPress={()=>{this.setState({mode: 'login'})}}
               >
               <Text style={loginStyles.buttonText}>Login</Text>
@@ -211,7 +195,6 @@ export class Login extends React.Component {
 
             <TouchableOpacity 
               style={loginStyles.buttonContainer}
-              
               onPress={this.onCreateAccount}
               >
               <Text style={loginStyles.buttonText}>Create</Text>
