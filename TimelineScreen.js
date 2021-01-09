@@ -10,8 +10,8 @@ export class Timeline extends React.Component {
     super(props);
 
     this.dataModel = getDataModel();
-    // this.userKey = this.props.route.params.currentUser.key
-    this.userKey = '9lnN5X4zdxeznPfWXp20'; // FLAG - testing
+    this.userKey = this.props.route.params.currentUser.key
+    // this.userKey = '9lnN5X4zdxeznPfWXp20'; // FLAG - testing
 
     this.state = {
       diveList: []

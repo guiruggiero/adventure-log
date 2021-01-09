@@ -1,7 +1,9 @@
 import React from 'react';
 import { Text, View, Platform, TextInput, TouchableOpacity, Alert, Switch } from 'react-native';
+import { AirbnbRating, Divider, CheckBox } from 'react-native-elements';
+import { Picker } from '@react-native-picker/picker';
 
-import { diveStyles, timelineStyles } from './Styles';
+import { diveStyles } from './Styles';
 import { getDataModel } from './DataModel';
 
 export class DiveAddEdit extends React.Component {
@@ -30,11 +32,11 @@ export class DiveAddEdit extends React.Component {
         weights: 0,
         favorite: false,
 
-        day: '', // FLAG
+        day: '',
         time: '',
         // start: ???, // timestamp, Date.now(), October 11, 2020 at 12:34:00 PM UTC-5 - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
 
-        latitude: 0, // FLAG
+        latitude: 0,
         longitude: 0,
         // coordinates: ???, // geopoint, [41.0153513° N, 83.9355813° W] 
       }
@@ -102,7 +104,7 @@ export class DiveAddEdit extends React.Component {
         </View>
 
         <View style={diveStyles.body}>
-          {/* <View style={diveStyles.imageContainer}> FLAG
+          {/* <View style={diveStyles.imageContainer}>
           </View> */}
 
           <View style={diveStyles.fieldsContainer}>
@@ -152,6 +154,7 @@ export class DiveAddEdit extends React.Component {
               />
             </View>
           
+            {/* latitude */}
             <View style={diveStyles.fieldRow}>
               <Text style={diveStyles.fieldLabel}>
                 Latitude:
@@ -159,16 +162,17 @@ export class DiveAddEdit extends React.Component {
 
               <TextInput
                 style={diveStyles.fieldBox}
-
                 keyboardType="numeric"
                 autoCorrect={false}
-
+                autoCapitalize="none"
+                returnKeyType="next"
+                autoCompleteType="off"
                 value={this.state.dive.latitude}
-
                 onChangeText={(text) => this.setState({dive: {...this.state.dive, latitude: text}})}
               />
             </View>
 
+            {/* longitude */}
             <View style={diveStyles.fieldRow}>
               <Text style={diveStyles.fieldLabel}>
                 Longitude:
@@ -176,17 +180,17 @@ export class DiveAddEdit extends React.Component {
 
               <TextInput
                 style={diveStyles.fieldBox}
-
                 keyboardType="numeric"
                 autoCorrect={false}
-
+                autoCapitalize="none"
+                returnKeyType="next"
+                autoCompleteType="off"
                 value={this.state.dive.longitude}
-
                 onChangeText={(text) => this.setState({dive: {...this.state.dive, longitude: text}})}
               />
             </View>
 
-            <View style={timelineStyles.separator}/>
+            <Divider style={{ backgroundColor: 'black' }} />
           
             <View style={diveStyles.fieldRow}>
               <Text style={diveStyles.fieldLabel}>
@@ -196,7 +200,7 @@ export class DiveAddEdit extends React.Component {
               <TextInput
                 style={diveStyles.fieldBox}
 
-                // defaultValue={this.today} // FLAG
+                // defaultValue={this.today}
                 keyboardType="numeric"
                 autoCorrect={false}
 
@@ -223,6 +227,7 @@ export class DiveAddEdit extends React.Component {
               />
             </View>
 
+            {/* totalTime */}
             <View style={diveStyles.fieldRow}>
               <Text style={diveStyles.fieldLabel}>
                 Total time:
@@ -230,16 +235,17 @@ export class DiveAddEdit extends React.Component {
 
               <TextInput
                 style={diveStyles.fieldBox}
-
                 keyboardType="numeric"
                 autoCorrect={false}
-
+                autoCapitalize="none"
+                returnKeyType="next"
+                autoCompleteType="off"
                 value={this.state.dive.totalTime}
-
                 onChangeText={(text) => this.setState({dive: {...this.state.dive, totalTime: text}})}
               />
             </View>
 
+            {/* maxDepth */}
             <View style={diveStyles.fieldRow}>
               <Text style={diveStyles.fieldLabel}>
                 Max depth:
@@ -247,16 +253,17 @@ export class DiveAddEdit extends React.Component {
 
               <TextInput
                 style={diveStyles.fieldBox}
-
                 keyboardType="numeric"
                 autoCorrect={false}
-
+                autoCapitalize="none"
+                returnKeyType="next"
+                autoCompleteType="off"
                 value={this.state.dive.maxDepth}
-
                 onChangeText={(text) => this.setState({dive: {...this.state.dive, maxDepth: text}})}
               />
             </View>
 
+            {/* tempSurface */}
             <View style={diveStyles.fieldRow}>
               <Text style={diveStyles.fieldLabel}>
                 Surface temp.:
@@ -264,16 +271,17 @@ export class DiveAddEdit extends React.Component {
 
               <TextInput
                 style={diveStyles.fieldBox}
-
                 keyboardType="numeric"
                 autoCorrect={false}
-
+                autoCapitalize="none"
+                returnKeyType="next"
+                autoCompleteType="off"
                 value={this.state.dive.tempSurface}
-
                 onChangeText={(text) => this.setState({dive: {...this.state.dive, tempSurface: text}})}
               />
             </View>
 
+            {/* tempBottom */}
             <View style={diveStyles.fieldRow}>
               <Text style={diveStyles.fieldLabel}>
                 Bottom temp.:
@@ -281,35 +289,38 @@ export class DiveAddEdit extends React.Component {
 
               <TextInput
                 style={diveStyles.fieldBox}
-
                 keyboardType="numeric"
                 autoCorrect={false}
-
+                autoCapitalize="none"
+                returnKeyType="next"
+                autoCompleteType="off"
                 value={this.state.dive.tempBottom}
-
                 onChangeText={(text) => this.setState({dive: {...this.state.dive, tempBottom: text}})}
               />
             </View>
 
-            <View style={timelineStyles.separator}/>
+            <Divider style={{ backgroundColor: 'black' }} />
 
+            {/* gas */}
             <View style={diveStyles.fieldRow}>
               <Text style={diveStyles.fieldLabel}>
                 Gas:
               </Text>
 
-              <TextInput
-                style={diveStyles.fieldBox}
-
-                autoCapitalize="words"
-                autoCorrect={true}
-
-                value={this.state.dive.gas}
-
-                onChangeText={(text) => this.setState({dive: {...this.state.dive, gas: text}})}
-              />
+              <Picker
+                selectedValue={this.state.dive.gas}
+                // prompt={'Test'} // Android only
+                // mode={'dropdown'} // Android only
+                onValueChange={(itemValue) => this.setState({dive: {...this.state.dive, gas: itemValue}})}>
+                <Picker.Item label="" value="" />
+                <Picker.Item label="Air" value="air" />
+                <Picker.Item label="EAN28" value="ean28" />
+                <Picker.Item label="EAN32" value="ean32" />
+                <Picker.Item label="EAN36" value="ean36" />
+              </Picker>
             </View>
 
+            {/* weights */}
             <View style={diveStyles.fieldRow}>
               <Text style={diveStyles.fieldLabel}>
                 Weights:
@@ -317,30 +328,27 @@ export class DiveAddEdit extends React.Component {
 
               <TextInput
                 style={diveStyles.fieldBox}
-
                 keyboardType="numeric"
                 autoCorrect={false}
-
+                autoCapitalize="none"
+                returnKeyType="next"
+                autoCompleteType="off"
                 value={this.state.dive.weights}
-
                 onChangeText={(text) => this.setState({dive: {...this.state.dive, weights: text}})}
               />
             </View>
 
+            {/* rating */}
             <View style={diveStyles.fieldRow}>
               <Text style={diveStyles.fieldLabel}>
                 Rating:
               </Text>
 
-              <TextInput
-                style={diveStyles.fieldBox}
-
-                keyboardType="numeric"
-                autoCorrect={false}
-
-                value={this.state.dive.rating}
-
-                onChangeText={(text) => this.setState({dive: {...this.state.dive, rating: text}})}
+              <AirbnbRating
+                count={5}
+                defaultRating={this.state.dive.rating}
+                showRating={false}
+                onFinishRating={(rating) => this.setState({dive: {...this.state.dive, rating: rating}})}
               />
             </View>
 
@@ -349,11 +357,18 @@ export class DiveAddEdit extends React.Component {
               <Text style={diveStyles.fieldLabel}>
                 Favorite:
               </Text>
-              
+
               <Switch
                 value={this.state.dive.favorite}
                 onValueChange={(value) => this.setState({dive: {...this.state.dive, favorite: value}})}
               />
+
+              {/* <CheckBox
+                iconRight
+                title='Favorite'
+                checked={this.state.dive.favorite}
+                onPress={(value) => this.setState({dive: {...this.state.dive, favorite: value}})}
+              /> */}
             </View>
 
             {/* notes */}

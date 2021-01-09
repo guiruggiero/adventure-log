@@ -32,7 +32,7 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator 
-        initialRouteName="Timeline" // FLAG - testing
+        initialRouteName="Login" // FLAG - testing
         screenOptions={{
           headerShown: false
         }}
