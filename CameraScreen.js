@@ -1,12 +1,11 @@
 import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-elements';
+import * as Permissions from 'expo-permissions';
+import { Camera } from 'expo-camera';
 
 import { cameraStyles } from './Styles';
 import { getDataModel } from './DataModel';
-
-import * as Permissions from 'expo-permissions';
-import { Camera } from 'expo-camera';
 
 export class Cam extends React.Component {
   constructor(props) {

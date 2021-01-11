@@ -2,6 +2,9 @@ import React from 'react';
 import { Text, View, Platform, TextInput, TouchableOpacity, Alert, Switch } from 'react-native';
 import { AirbnbRating, Divider, CheckBox } from 'react-native-elements';
 import { Picker } from '@react-native-picker/picker';
+import DateTimePicker from '@react-native-community/datetimepicker'; // https://github.com/react-native-datetimepicker/datetimepicker
+import DatePicker from "react-datepicker"; // https://github.com/Hacker0x01/react-datepicker
+import "./node_modules/react-datepicker/dist/react-datepicker.css"; // FLAG ./node_modules/ ?
 
 import { diveStyles } from './Styles';
 import { getDataModel } from './DataModel';
@@ -11,35 +14,12 @@ export class DiveAddEdit extends React.Component {
     super(props);
 
     this.dataModel = getDataModel();
-    this.operation = this.props.route.params.operation;
+    // this.operation = this.props.route.params.operation;
+    this.operation = 'add'; // FLAG - for testing
 
     if (this.operation === 'add') {
-      this.dive = {
-        country: '',
-        diver: this.props.route.params.diver,
-        diveSite: '',
-        gas: '',
-        location: '',
-        notes: '',
-        pictureURL: '',
-        maxDepth: 0,
-        pictureHeight: 0,
-        pictureWidth: 0,
-        rating: 0,
-        tempBottom: 0,
-        tempSurface: 0,
-        totalTime: 0,
-        weights: 0,
-        favorite: false,
-
-        day: '',
-        time: '',
-        // start: ???, // timestamp, Date.now(), October 11, 2020 at 12:34:00 PM UTC-5 - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
-
-        latitude: 0,
-        longitude: 0,
-        // coordinates: ???, // geopoint, [41.0153513° N, 83.9355813° W] 
-      }
+      // this.dive = this.dataModel.createDive(this.props.route.params.diver);
+      this.dive = this.dataModel.createDive('9lnN5X4zdxeznPfWXp20'); // FLAG - for testing
     }
 
     else { // === 'edit'
@@ -75,6 +55,33 @@ export class DiveAddEdit extends React.Component {
               await this.dataModel.deleteDive(diveKey);
               this.props.navigation.navigate("Timeline");
             }
+          }
+        ],
+        { cancelable: false }
+      );
+    }
+  }
+
+  onCancel = () => { // FLAG - test - web OK
+    if (Platform.OS === 'web') {
+      let response = confirm("Heads up, nothing will be saved!");
+      if (response === true) {
+        this.props.navigation.goBack();
+      }
+    }
+    
+    else { // if running on app, iOS or Android
+      Alert.alert(
+        'Heads up',
+        'Nothing will be saved!',
+        [
+          {
+            text: 'Cancel',
+            style: 'cancel'
+          },
+          {
+            text: 'OK',
+            onPress: () => {this.props.navigation.goBack()}
           }
         ],
         { cancelable: false }
@@ -192,39 +199,25 @@ export class DiveAddEdit extends React.Component {
 
             <Divider style={{ backgroundColor: 'black' }} />
           
+            {/* dateTime - FLAG - test*/}
             <View style={diveStyles.fieldRow}>
               <Text style={diveStyles.fieldLabel}>
-                Day:
+                Day and time:
               </Text>
 
-              <TextInput
-                style={diveStyles.fieldBox}
+              <View>
+                {this.dive.dateTime.prototype.getDate()}
+              </View>
 
-                // defaultValue={this.today}
-                keyboardType="numeric"
-                autoCorrect={false}
-
-                value={this.state.dive.day}
-
-                onChangeText={(text) => this.setState({dive: {...this.state.dive, day: text}})}
-              />
-            </View>
-          
-            <View style={diveStyles.fieldRow}>
-              <Text style={diveStyles.fieldLabel}>
-                Start time:
-              </Text>
-
-              <TextInput
-                style={diveStyles.fieldBox}
-
-                keyboardType="numeric"
-                autoCorrect={false}
-
-                value={this.state.dive.time}
-
-                onChangeText={(text) => this.setState({dive: {...this.state.dive, time: text}})}
-              />
+              {/* {Platform.OS === 'web' ? (
+                <DatePicker
+                  showTimeSelect
+                  selected={this.dive.dateTime}
+                  onChange={(date) => this.setState({dive: {...this.state.dive, dateTime: date}})}
+                />
+              ):(
+                <View/>
+              )} */}
             </View>
 
             {/* totalTime */}
@@ -301,7 +294,7 @@ export class DiveAddEdit extends React.Component {
 
             <Divider style={{ backgroundColor: 'black' }} />
 
-            {/* gas */}
+            {/* gas - FLAG - test - web OK */}
             <View style={diveStyles.fieldRow}>
               <Text style={diveStyles.fieldLabel}>
                 Gas:
@@ -394,8 +387,7 @@ export class DiveAddEdit extends React.Component {
           <View style={diveStyles.footerButtonContainer}>
             <TouchableOpacity 
               style={diveStyles.footerButton}
-
-              onPress={()=>{this.props.navigation.navigate("Timeline")}}
+              onPress={()=>{this.onCancel()}}
             >
               <Text style={diveStyles.footerButtonText}>Cancel</Text>
             </TouchableOpacity>
@@ -403,16 +395,16 @@ export class DiveAddEdit extends React.Component {
             {this.operation === 'edit' ? (
               <TouchableOpacity 
                 style={diveStyles.footerButton}
-
                 onPress={()=>{this.onDelete(this.dive.key)}}
               >
                 <Text style={diveStyles.footerButtonText}>Delete</Text>
               </TouchableOpacity>
-            ):(<View/>)}
+            ):(
+              <View/>
+            )}
 
             <TouchableOpacity
               style={diveStyles.footerButton}
-              
               onPress={()=>{this.onSave()}}
             >
               <Text style={diveStyles.footerButtonText}>Save</Text>

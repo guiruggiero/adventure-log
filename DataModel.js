@@ -1,5 +1,6 @@
 import firebase from 'firebase';
-import '@firebase/firestore';
+// import '@firebase/firestore';
+import 'firebase/firestore';
 import '@firebase/storage';
 import { firebaseConfig } from './Secrets';
 
@@ -56,6 +57,35 @@ class DataModel {
       }
     }
     return divesFromUser;
+  }
+
+  createDive = (diver) => {
+    let blankDive = {
+      country: '',
+      diver: diver,
+      diveSite: '',
+      gas: '',
+      location: '',
+      notes: '',
+      pictureURL: '',
+      dateTime: Date(),
+      timestamp: Date.now(), // needed?
+      favorite: false,
+      rating: 0,
+      pictureHeight: 0,
+      pictureWidth: 0,
+      maxDepth: 0,
+      tempBottom: 0,
+      tempSurface: 0,
+      totalTime: 0,
+      weights: 0,
+
+      latitude: 0,
+      longitude: 0
+      // coordinates: ???, // geopoint, [41.0153513° N, 83.9355813° W] 
+    }
+
+    return blankDive;
   }
 
   addUser = async (email, pass, dispName) => {
@@ -130,7 +160,7 @@ class DataModel {
     }
   }
 
-  addDivePicture = async (diveKey, pictureObject) => { // FLAG - not finished
+  addDivePicture = async (diveKey, pictureObject) => {
     let fileName = diveKey;
     let pictureRef = this.storageRef.child(fileName);
 

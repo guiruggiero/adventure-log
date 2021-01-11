@@ -6,6 +6,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
+// screens
 import { Login } from './LoginScreen';
 
 // import { Home } from './HomeScreen';
@@ -32,7 +33,7 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator 
-        initialRouteName="Login" // FLAG - testing
+        initialRouteName="DiveAddEdit" // FLAG - for testing
         screenOptions={{
           headerShown: false
         }}
