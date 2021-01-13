@@ -60,8 +60,7 @@ export class Login extends React.Component {
     for (let user of users) {
       if (user.email === email) {
         if (user.password === pass) {
-          this.dataModel.loadDives(user.key);
-          setTimeout(console.log("Timer"), 10000); // FLAG - maybe move to TimelineScreen constructor?
+          this.dataModel.cleanDives(user.key);
           this.props.navigation.navigate("Timeline", {
             currentUser: user
           });

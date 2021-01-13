@@ -1,7 +1,7 @@
 import firebase from 'firebase';
-// import '@firebase/firestore';
-import 'firebase/firestore';
-import '@firebase/storage';
+import '@firebase/firestore';
+// import 'firebase/firestore';
+// import '@firebase/storage';
 import { firebaseConfig } from './Secrets';
 
 class DataModel {
@@ -13,7 +13,7 @@ class DataModel {
 
     this.usersRef = firebase.firestore().collection('users');
     this.divesRef = firebase.firestore().collection('dives');
-    this.storageRef = firebase.storage().ref();
+    // this.storageRef = firebase.storage().ref();
 
     this.users = [];
     this.dives = [];
@@ -22,6 +22,7 @@ class DataModel {
 
   asyncInit = async () => {
     this.loadUsers();
+    this.loadDives();
   }
 
   loadUsers = async () => {
@@ -56,15 +57,24 @@ class DataModel {
     return newUser;
   }
 
-  loadDives = async (userKey) => {
-    let querySnap = await this.divesRef.where('diver', '==', userKey).orderBy('timestamp', "desc").get();
+  loadDives = async () => {
+    let querySnap = await this.divesRef.orderBy('timestamp', "desc").get();
     querySnap.forEach(qDocSnap => {
       let key = qDocSnap.id;
       let dive = qDocSnap.data();
       dive.key = key;
       this.dives.push(dive);
     });
-    console.log("Done fetching dives");
+  }
+
+  cleanDives = (userKey) => {
+    let cleanedDives = [];
+    for (let dive of this.dives) {
+      if (dive.diver === userKey) {
+        cleanedDives.push(dive);
+      }
+    }
+    this.dives = cleanedDives;
   }
 
   getDives = () => {
@@ -154,28 +164,28 @@ class DataModel {
     }
   }
 
-  addDivePicture = async (diveKey, pictureObject) => {
-    let fileName = diveKey;
-    let pictureRef = this.storageRef.child(fileName);
+  // addDivePicture = async (diveKey, pictureObject) => {
+  //   let fileName = diveKey;
+  //   let pictureRef = this.storageRef.child(fileName);
 
-    // fetch picture object from the local filesystem
-    let response = await fetch(pictureObject.uri);
-    let pictureBlob = await response.blob();
+  //   // fetch picture object from the local filesystem
+  //   let response = await fetch(pictureObject.uri);
+  //   let pictureBlob = await response.blob();
 
-    // upload to FB Storage
-    await pictureRef.put(pictureBlob);
+  //   // upload to FB Storage
+  //   await pictureRef.put(pictureBlob);
 
-    // get picture URL
-    let downloadURL = await pictureRef.getDownloadURL();
+  //   // get picture URL
+  //   let downloadURL = await pictureRef.getDownloadURL();
     
-    // update dive with picture and store in FB
-    let diveRef = this.divesRef.doc(diveKey);
-    await diveRef.update({
-      pictureURL: downloadURL,
-      pictureHeight: pictureObject.height,
-      pictureWidth: pictureObject.width
-    });
-  }
+  //   // update dive with picture and store in FB
+  //   let diveRef = this.divesRef.doc(diveKey);
+  //   await diveRef.update({
+  //     pictureURL: downloadURL,
+  //     pictureHeight: pictureObject.height,
+  //     pictureWidth: pictureObject.width
+  //   });
+  // }
 }
 
 

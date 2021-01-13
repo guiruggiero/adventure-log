@@ -25,8 +25,7 @@ export class Timeline extends React.Component {
   onFocus = () => {
     let dives = this.dataModel.getDives();
     this.setState({diveList: dives});
-    console.log("Updated list");
-    
+
     this.props.navigation.setParams({operation: 'none'});
   }
 

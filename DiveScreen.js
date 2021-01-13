@@ -62,7 +62,7 @@ export class DiveAddEdit extends React.Component {
     }
   }
 
-  onCancel = () => { // FLAG - test - web OK
+  onCancel = () => {
     if (Platform.OS === 'web') {
       let response = confirm("Heads up, nothing will be saved!");
       if (response === true) {
@@ -199,7 +199,7 @@ export class DiveAddEdit extends React.Component {
 
             <Divider style={{ backgroundColor: 'black' }} />
           
-            {/* dateTime - FLAG - test*/}
+            {/* dateTime - FLAG - test, change datetime too with .getTime()*/}
             <View style={diveStyles.fieldRow}>
               <Text style={diveStyles.fieldLabel}>
                 Day and time:
