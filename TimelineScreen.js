@@ -39,7 +39,7 @@ export class Timeline extends React.Component {
         <View style={timelineStyles.body}>
           <View style={timelineStyles.listContainer}>
             <FlatList
-              data={this.state.diveList}
+              data={this.state.diveList.sort(function(a, b) {return b.timestamp - a.timestamp;})}
 
               ItemSeparatorComponent={()=>(
                 <View style={timelineStyles.separator}/>
