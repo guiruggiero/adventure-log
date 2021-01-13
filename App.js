@@ -33,7 +33,7 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator 
-        initialRouteName="DiveAddEdit" // FLAG - for testing
+        initialRouteName="Login" // FLAG - for testing
         screenOptions={{
           headerShown: false
         }}

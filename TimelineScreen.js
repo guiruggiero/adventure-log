@@ -10,12 +10,12 @@ export class Timeline extends React.Component {
     super(props);
 
     this.dataModel = getDataModel();
-    this.userKey = this.props.route.params.currentUser.key
+    this.userKey = this.props.route.params.currentUser.key;
     // this.userKey = '9lnN5X4zdxeznPfWXp20'; // FLAG - for testing
 
     this.state = {
       diveList: []
-    }
+    };
   }
 
   componentDidMount = () => {
@@ -23,8 +23,9 @@ export class Timeline extends React.Component {
   }
 
   onFocus = () => {
-    let dives = this.dataModel.getDives(this.userKey);
+    let dives = this.dataModel.getDives();
     this.setState({diveList: dives});
+    console.log("Updated list");
     
     this.props.navigation.setParams({operation: 'none'});
   }
@@ -56,7 +57,7 @@ export class Timeline extends React.Component {
                   >
                     <View style={timelineStyles.listDiveTextContainer}> 
                       <Text style={timelineStyles.listDiveText}>
-                        {item.day} - {item.diveSite}, {item.country}
+                        {item.diveSite}, {item.country}
                       </Text> 
                     </View>
                   </TouchableOpacity>

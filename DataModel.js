@@ -22,7 +22,6 @@ class DataModel {
 
   asyncInit = async () => {
     this.loadUsers();
-    this.loadDives();
   }
 
   loadUsers = async () => {
@@ -35,57 +34,8 @@ class DataModel {
     });
   }
 
-  loadDives = async () => {
-    let querySnap = await this.divesRef.get();
-    querySnap.forEach(qDocSnap => {
-      let key = qDocSnap.id;
-      let data = qDocSnap.data();
-      data.key = key;
-      this.dives.push(data);
-    });
-  }
-
   getUsers = () => {
     return this.users;
-  }
-
-  getDives = (userKey) => {
-    let divesFromUser = [];
-    for (let dive of this.dives) {
-      if (dive.diver === userKey) { // only of current user
-        divesFromUser.push(dive);
-      }
-    }
-    return divesFromUser;
-  }
-
-  createDive = (diver) => {
-    let blankDive = {
-      country: '',
-      diver: diver,
-      diveSite: '',
-      gas: '',
-      location: '',
-      notes: '',
-      pictureURL: '',
-      dateTime: Date(),
-      timestamp: Date.now(), // needed?
-      favorite: false,
-      rating: 0,
-      pictureHeight: 0,
-      pictureWidth: 0,
-      maxDepth: 0,
-      tempBottom: 0,
-      tempSurface: 0,
-      totalTime: 0,
-      weights: 0,
-
-      latitude: 0,
-      longitude: 0
-      // coordinates: ???, // geopoint, [41.0153513° N, 83.9355813° W] 
-    }
-
-    return blankDive;
   }
 
   addUser = async (email, pass, dispName) => {
@@ -104,6 +54,50 @@ class DataModel {
     this.users.push(newUser);
 
     return newUser;
+  }
+
+  loadDives = async (userKey) => {
+    let querySnap = await this.divesRef.where('diver', '==', userKey).orderBy('timestamp', "desc").get();
+    querySnap.forEach(qDocSnap => {
+      let key = qDocSnap.id;
+      let dive = qDocSnap.data();
+      dive.key = key;
+      this.dives.push(dive);
+    });
+    console.log("Done fetching dives");
+  }
+
+  getDives = () => {
+    return this.dives;
+  }
+
+  createDive = (diver) => {
+    let blankDive = {
+      country: '',
+      diver: diver,
+      diveSite: '',
+      gas: '',
+      location: '',
+      notes: '',
+      pictureURL: '',
+      dateTime: Date(),
+      timestamp: Date.now(),
+      favorite: false,
+      rating: 0,
+      pictureHeight: 0,
+      pictureWidth: 0,
+      maxDepth: 0,
+      tempBottom: 0,
+      tempSurface: 0,
+      totalTime: 0,
+      weights: 0,
+
+      latitude: 0,
+      longitude: 0
+      // coordinates: ???, // geopoint, [41.0153513° N, 83.9355813° W] 
+    }
+
+    return blankDive;
   }
 
   addDive = async (newDive) => {

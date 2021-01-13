@@ -2,9 +2,9 @@ import React from 'react';
 import { Text, View, Platform, TextInput, TouchableOpacity, Alert, Switch } from 'react-native';
 import { AirbnbRating, Divider, CheckBox } from 'react-native-elements';
 import { Picker } from '@react-native-picker/picker';
-import DateTimePicker from '@react-native-community/datetimepicker'; // https://github.com/react-native-datetimepicker/datetimepicker
-import DatePicker from "react-datepicker"; // https://github.com/Hacker0x01/react-datepicker
-import "./node_modules/react-datepicker/dist/react-datepicker.css"; // FLAG ./node_modules/ ?
+// import DateTimePicker from '@react-native-community/datetimepicker';
+// import DatePicker from "react-datepicker";
+// import "./node_modules/react-datepicker/dist/react-datepicker.css"; // FLAG ./node_modules/ ?
 
 import { diveStyles } from './Styles';
 import { getDataModel } from './DataModel';
@@ -14,12 +14,12 @@ export class DiveAddEdit extends React.Component {
     super(props);
 
     this.dataModel = getDataModel();
-    // this.operation = this.props.route.params.operation;
-    this.operation = 'add'; // FLAG - for testing
+    this.operation = this.props.route.params.operation;
+    // this.operation = 'add'; // FLAG - for testing
 
     if (this.operation === 'add') {
-      // this.dive = this.dataModel.createDive(this.props.route.params.diver);
-      this.dive = this.dataModel.createDive('9lnN5X4zdxeznPfWXp20'); // FLAG - for testing
+      this.dive = this.dataModel.createDive(this.props.route.params.diver);
+      // this.dive = this.dataModel.createDive('9lnN5X4zdxeznPfWXp20'); // FLAG - for testing
     }
 
     else { // === 'edit'
@@ -206,7 +206,7 @@ export class DiveAddEdit extends React.Component {
               </Text>
 
               <View>
-                {this.dive.dateTime.prototype.getDate()}
+                {/* {this.dive.dateTime} */}
               </View>
 
               {/* {Platform.OS === 'web' ? (
