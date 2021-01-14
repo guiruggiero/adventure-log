@@ -14,8 +14,8 @@ export class DiveAddEdit extends React.Component {
     super(props);
 
     this.dataModel = getDataModel();
-    this.operation = this.props.route.params.operation;
-    // this.operation = 'add'; // FLAG - for testing
+    // this.operation = this.props.route.params.operation;
+    this.operation = 'add'; // FLAG - for testing
 
     if (this.operation === 'add') {
       this.dive = this.dataModel.createDive(this.props.route.params.diver);
@@ -25,6 +25,11 @@ export class DiveAddEdit extends React.Component {
     else { // === 'edit'
       this.dive = this.props.route.params.dive;
     }
+
+    // converting timestamp into date variables
+    this.date = new Date(this.dive.timestamp);
+    [this.month, this.day, this.year] = this.date.toLocaleDateString("en-US").split("/");
+    [this.hour, this.minute] = this.date.toLocaleTimeString("en-US").split(/:| /);
 
     this.state = {
       dive: this.dive
@@ -115,7 +120,7 @@ export class DiveAddEdit extends React.Component {
           </View> */}
 
           <View style={diveStyles.fieldsContainer}>
-            {/* diveSite */}
+            {/* dive site */}
             <View style={diveStyles.fieldRow}>
               <Text style={diveStyles.fieldLabel}>
                 Dive site:
@@ -199,14 +204,19 @@ export class DiveAddEdit extends React.Component {
 
             <Divider style={{ backgroundColor: 'black' }} />
           
-            {/* dateTime - FLAG - test, change datetime too with .getTime()*/}
+            {/* date and time - FLAG*/}
             <View style={diveStyles.fieldRow}>
               <Text style={diveStyles.fieldLabel}>
                 Day and time:
               </Text>
 
               <View>
-                {/* {this.dive.dateTime} */}
+                {/* <Text>{this.date.toDateString()} @ {this.date.getHours()}:{this.date.getMinutes()}</Text> */}
+                {/* <Text>{this.month}/{this.day}/{this.year} @ {this.hour}:{this.minute} {this.date.getHours > 12 ? ("AM") : ("PM")}</Text> */}
+                <Text>
+                  {this.date.toLocaleDateString('en-US', {weekday: 'short', month: 'short', day: 'numeric', year: 'numeric'})}{" "}
+                  @ {this.date.toLocaleTimeString('en-US', {hour: 'numeric', minute: '2-digit', hour12: true, timeZoneName: 'short'})}
+                </Text>
               </View>
 
               {/* {Platform.OS === 'web' ? (
@@ -220,7 +230,7 @@ export class DiveAddEdit extends React.Component {
               )} */}
             </View>
 
-            {/* totalTime */}
+            {/* total time */}
             <View style={diveStyles.fieldRow}>
               <Text style={diveStyles.fieldLabel}>
                 Total time:
@@ -238,10 +248,10 @@ export class DiveAddEdit extends React.Component {
               />
             </View>
 
-            {/* maxDepth */}
+            {/* max depth */}
             <View style={diveStyles.fieldRow}>
               <Text style={diveStyles.fieldLabel}>
-                Max depth:
+                Max. depth:
               </Text>
 
               <TextInput
@@ -256,7 +266,7 @@ export class DiveAddEdit extends React.Component {
               />
             </View>
 
-            {/* tempSurface */}
+            {/* surface temp */}
             <View style={diveStyles.fieldRow}>
               <Text style={diveStyles.fieldLabel}>
                 Surface temp.:
@@ -274,7 +284,7 @@ export class DiveAddEdit extends React.Component {
               />
             </View>
 
-            {/* tempBottom */}
+            {/* bottom temp */}
             <View style={diveStyles.fieldRow}>
               <Text style={diveStyles.fieldLabel}>
                 Bottom temp.:
@@ -294,7 +304,7 @@ export class DiveAddEdit extends React.Component {
 
             <Divider style={{ backgroundColor: 'black' }} />
 
-            {/* gas - FLAG - test - web OK */}
+            {/* gas - FLAG*/}
             <View style={diveStyles.fieldRow}>
               <Text style={diveStyles.fieldLabel}>
                 Gas:

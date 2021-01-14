@@ -89,7 +89,6 @@ class DataModel {
       location: '',
       notes: '',
       pictureURL: '',
-      dateTime: Date(),
       timestamp: Date.now(),
       favorite: false,
       rating: 0,
