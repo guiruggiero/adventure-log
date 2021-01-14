@@ -12,6 +12,7 @@ export class Timeline extends React.Component {
     this.dataModel = getDataModel();
     this.userKey = this.props.route.params.currentUser.key;
     // this.userKey = '9lnN5X4zdxeznPfWXp20'; // FLAG - for testing
+    // this.dataModel.cleanDives(this.userKey); // FLAG - for testing
 
     this.state = {
       diveList: []
@@ -46,6 +47,7 @@ export class Timeline extends React.Component {
               )}
 
               renderItem={({item})=>{
+                let date = new Date(item.timestamp);
                 return(
                   <TouchableOpacity 
                     style={timelineStyles.listDiveContainer}
@@ -56,8 +58,10 @@ export class Timeline extends React.Component {
                   >
                     <View style={timelineStyles.listDiveTextContainer}> 
                       <Text style={timelineStyles.listDiveText}>
-                        {item.diveSite}, {item.country}
-                      </Text> 
+                        {date.toLocaleDateString('en-US', {month: '2-digit', day: '2-digit', year: 'numeric'})}
+                        {' - '}{item.diveSite}, {item.location}{' - '}
+                        {item.rating}{'* '}{item.favorite ? ('[favorite]') : ('')}
+                      </Text>
                     </View>
                   </TouchableOpacity>
                 );

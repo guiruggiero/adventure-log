@@ -14,8 +14,8 @@ export class DiveAddEdit extends React.Component {
     super(props);
 
     this.dataModel = getDataModel();
-    // this.operation = this.props.route.params.operation;
-    this.operation = 'add'; // FLAG - for testing
+    this.operation = this.props.route.params.operation;
+    // this.operation = 'add'; // FLAG - for testing
 
     if (this.operation === 'add') {
       this.dive = this.dataModel.createDive(this.props.route.params.diver);
@@ -28,8 +28,8 @@ export class DiveAddEdit extends React.Component {
 
     // converting timestamp into date variables
     this.date = new Date(this.dive.timestamp);
-    [this.month, this.day, this.year] = this.date.toLocaleDateString("en-US").split("/");
-    [this.hour, this.minute] = this.date.toLocaleTimeString("en-US").split(/:| /);
+    // [this.month, this.day, this.year] = this.date.toLocaleDateString("en-US").split("/");
+    // [this.hour, this.minute] = this.date.toLocaleTimeString("en-US").split(/:| /);
 
     this.state = {
       dive: this.dive
