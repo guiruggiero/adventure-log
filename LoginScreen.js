@@ -47,6 +47,7 @@ export class Login extends React.Component {
       this.state.displayNameInput
     );
 
+    this.dataModel.cleanDives(newUser.key); // wipe data model clean
     this.props.navigation.navigate("Timeline", {
       currentUser: newUser
     });
@@ -60,7 +61,7 @@ export class Login extends React.Component {
     for (let user of users) {
       if (user.email === email) {
         if (user.password === pass) {
-          this.dataModel.cleanDives(user.key);
+          this.dataModel.cleanDives(user.key); // remove dives from other divers
           this.props.navigation.navigate("Timeline", {
             currentUser: user
           });
