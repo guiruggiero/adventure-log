@@ -16,12 +16,7 @@ class DataModel {
 
     this.users = [];
     this.dives = [];
-    this.asyncInit();
-  }
-
-  asyncInit = async () => {
     this.loadUsers();
-    this.loadDives();
   }
 
   loadUsers = async () => {
@@ -57,6 +52,7 @@ class DataModel {
   }
 
   loadDives = async () => {
+    this.dives = []; // if called again, avoid duplicates
     let querySnap = await this.divesRef.orderBy('timestamp', "desc").get();
     querySnap.forEach(qDocSnap => {
       let key = qDocSnap.id;

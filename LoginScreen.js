@@ -19,6 +19,17 @@ export class Login extends React.Component {
     }
   }
 
+  // execute every time the screen receives focus
+  componentDidMount = () => {
+    this.focusUnsubscribe = this.props.navigation.addListener('focus', this.onFocus);
+  }
+  onFocus = () => {
+    this.dataModel.loadDives();
+  }
+  componentWillUnmount = () => {
+    this.focusUnsubscribe();
+  }
+
   onCreateAccount = async () => {
     // pending:
     // check that this is a valid email
@@ -47,7 +58,7 @@ export class Login extends React.Component {
       this.state.displayNameInput
     );
 
-    this.dataModel.cleanDives(newUser.key); // wipe data model clean
+    this.dataModel.cleanDives(); // wipe data model clean
     this.props.navigation.navigate("Timeline", {
       currentUser: newUser
     });

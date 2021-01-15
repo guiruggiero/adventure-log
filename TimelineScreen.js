@@ -19,17 +19,16 @@ export class Timeline extends React.Component {
     };
   }
 
+  // execute every time the screen receives focus
   componentDidMount = () => {
     this.focusUnsubscribe = this.props.navigation.addListener('focus', this.onFocus);
   }
-
   onFocus = () => {
     let dives = this.dataModel.getDives();
     this.setState({diveList: dives});
 
     this.props.navigation.setParams({operation: 'none'});
   }
-
   componentWillUnmount = () => {
     this.focusUnsubscribe();
   }
