@@ -1,11 +1,11 @@
-import React from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
-import { Button } from 'react-native-elements';
-import * as Permissions from 'expo-permissions';
-import { Camera } from 'expo-camera'; // "expo-camera": "~9.1.0", on package.json
+import React from "react";
+import { Text, View, TouchableOpacity } from "react-native";
+import { Button } from "react-native-elements";
+import * as Permissions from "expo-permissions";
+import { Camera } from "expo-camera"; // "expo-camera": "~9.1.0", on package.json
 
-import { cameraStyles } from './Styles';
-import { getDataModel } from './DataModel';
+import { cameraStyles } from "./Styles";
+import { getDataModel } from "./DataModel";
 
 export class Cam extends React.Component {
   constructor(props) {
@@ -27,7 +27,7 @@ export class Cam extends React.Component {
   getPermissions = async () => {
     let cameraPerms = await Permissions.askAsync(Permissions.CAMERA);
 
-    let permGranted = cameraPerms.status === 'granted';
+    let permGranted = cameraPerms.status === "granted";
     this.setState({hasCameraPermission: permGranted});
   }
 
@@ -58,8 +58,8 @@ export class Cam extends React.Component {
             style={cameraStyles.container}
 
             type={this.state.type}
-            ratio='4:3' // FLAG - stretched image problem
-            pictureSize='Medium'
+            ratio="4:3" // FLAG - stretched image problem
+            pictureSize="Medium"
             ref={this.setupCamera}
           >
             <View style={cameraStyles.camera}>
@@ -80,7 +80,7 @@ export class Cam extends React.Component {
           </Camera>
 
           <Button
-            title='Take picture'
+            title="Take picture"
             onPress={this.handleTakePicture}
           />
         </View>

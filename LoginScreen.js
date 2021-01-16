@@ -1,8 +1,8 @@
-import React from 'react';
-import { TextInput, Text, View, Image, TouchableOpacity, KeyboardAvoidingView, Alert} from 'react-native';
+import React from "react";
+import { TextInput, Text, View, Image, TouchableOpacity, KeyboardAvoidingView, Alert} from "react-native";
 
-import { loginStyles } from './Styles';
-import { getDataModel } from './DataModel';
+import { loginStyles } from "./Styles";
+import { getDataModel } from "./DataModel";
 
 export class Login extends React.Component {
   constructor(props) {
@@ -11,20 +11,21 @@ export class Login extends React.Component {
     this.dataModel = getDataModel();
 
     this.state = {
-      mode: 'login',
-      emailInput: '',
-      displayNameInput: '',
-      passwordInput: '',
-      passwordCheckInput: ''
+      mode: "login",
+      emailInput: "",
+      displayNameInput: "",
+      passwordInput: "",
+      passwordCheckInput: ""
     }
   }
 
   // execute every time the screen receives focus
   componentDidMount = () => {
-    this.focusUnsubscribe = this.props.navigation.addListener('focus', this.onFocus);
+    this.focusUnsubscribe = this.props.navigation.addListener("focus", this.onFocus);
   }
   onFocus = () => {
     this.dataModel.loadDives();
+    // this.dataModel.loadJumps();
   }
   componentWillUnmount = () => {
     this.focusUnsubscribe();
@@ -32,19 +33,19 @@ export class Login extends React.Component {
 
   onCreateAccount = async () => {
     // pending:
-    // check that this is a valid email
-    // check password rules
-    // check that passwords match
-    // check that displayName isn't empty
+    //    check that this is a valid email
+    //    check password rules
+    //    check that passwords match
+    //    check that displayName isn't empty
 
     // check that user doesn't already exist
     let users = this.dataModel.getUsers();
     for (let user of users) {
       if (user.email === this.state.emailInput) {
         Alert.alert(
-          'Duplicate user',
-          'User ' + this.state.emailInput + ' already exists',
-          [{text: 'OK', style: 'OK'}]
+          "Duplicate user",
+          "User " + this.state.emailInput + " already exists",
+          [{text: "OK", style: "OK"}]
         );
 
         return;
@@ -59,7 +60,8 @@ export class Login extends React.Component {
     );
 
     this.dataModel.cleanDives(); // wipe data model clean
-    this.props.navigation.navigate("Timeline", {
+    // this.dataModel.cleanJumps(); // wipe data model clean
+    this.props.navigation.navigate("Timeline", { // Home
       currentUser: newUser
     });
   }
@@ -72,8 +74,9 @@ export class Login extends React.Component {
     for (let user of users) {
       if (user.email === email) {
         if (user.password === pass) {
-          this.dataModel.cleanDives(user.key); // remove dives from other divers
-          this.props.navigation.navigate("Timeline", {
+          this.dataModel.cleanDives(user.key); // remove dives from other users
+          // this.dataModel.cleanJumps(user.key); // remove jumps from other users
+          this.props.navigation.navigate("Timeline", { // Home
             currentUser: user
           });
 
@@ -84,9 +87,9 @@ export class Login extends React.Component {
 
     // no user match
     Alert.alert(
-      'Login failed',
-      'No match found for this email and password',
-      [{text: 'OK', style: 'OK'}]
+      "Login failed",
+      "No match found for this email and password",
+      [{text: "OK", style: "OK"}]
     );
   }
 
@@ -94,12 +97,12 @@ export class Login extends React.Component {
     return (
       <KeyboardAvoidingView 
         style={loginStyles.container}
-
         behavior={"height"}
-        keyboardVerticalOffset={10}>
+        keyboardVerticalOffset={10}
+      >
         <View style={loginStyles.topView}>
           <Image 
-            source={require('./assets/logo.png')}
+            source={require("./assets/logo.png")}
             style={loginStyles.logoImage}
           />
         </View>
@@ -112,17 +115,17 @@ export class Login extends React.Component {
 
             <TextInput
               style={loginStyles.inputText}
-              keyboardType='email-address'
-              autoCapitalize='none'
+              keyboardType="email-address"
+              autoCapitalize="none"
               autoCorrect={false}
-              textContentType='emailAddress'
-              autoCompleteType='email'
+              textContentType="emailAddress"
+              autoCompleteType="email"
               value={this.state.emailInput}
               onChangeText={(text)=>{this.setState({emailInput: text})}}
             />
           </View>
 
-          {this.state.mode === 'create' ? (
+          {this.state.mode === "create" ? (
             <View style={loginStyles.inputRow}>
               <Text style={loginStyles.inputLabel}>
                 Display name:
@@ -130,10 +133,10 @@ export class Login extends React.Component {
 
               <TextInput
                 style={loginStyles.inputText}
-                autoCapitalize='words'
+                autoCapitalize="words"
                 autoCorrect={false}
-                textContentType='name'
-                autoCompleteType='name'
+                textContentType="name"
+                autoCompleteType="name"
                 value={this.state.displayNameInput}
                 onChangeText={(text)=>{this.setState({displayNameInput: text})}}
               />
@@ -149,17 +152,17 @@ export class Login extends React.Component {
 
             <TextInput
               style={loginStyles.inputText}
-              keyboardType='numeric'
-              autoCapitalize='none'
+              keyboardType="numeric"
+              autoCapitalize="none"
               autoCorrect={false}
-              textContentType='password'
-              autoCompleteType='password'
+              textContentType="password"
+              autoCompleteType="password"
               value={this.state.passwordInput}
               onChangeText={(text)=>{this.setState({passwordInput: text})}}
-          />
-
+            />
           </View>
-          {this.state.mode === 'create' ? (
+
+          {this.state.mode === "create" ? (
             <View style={loginStyles.inputRow}>
               <Text style={loginStyles.inputLabel}>
                 Repeat password:
@@ -167,11 +170,11 @@ export class Login extends React.Component {
 
               <TextInput
                 style={loginStyles.inputText}
-                keyboardType='numeric'
-                autoCapitalize='none'
+                keyboardType="numeric"
+                autoCapitalize="none"
                 autoCorrect={false}
-                textContentType='password'
-                autoCompleteType='off'
+                textContentType="password"
+                autoCompleteType="off"
                 value={this.state.passwordCheckInput}
                 onChangeText={(text)=>{this.setState({passwordCheckInput: text})}}
               />
@@ -181,19 +184,19 @@ export class Login extends React.Component {
           )}
         </View>
 
-        {this.state.mode === 'login' ? (
+        {this.state.mode === "login" ? (
           <View style={loginStyles.bottomView}>
             <TouchableOpacity 
               style={loginStyles.buttonContainer}
-              onPress={()=>{this.setState({mode: 'create'})}}
-              >
+              onPress={()=>{this.setState({mode: "create"})}}
+            >
               <Text style={loginStyles.buttonText}>Create account</Text>
             </TouchableOpacity>
 
             <TouchableOpacity 
               style={loginStyles.buttonContainer}
               onPress={this.onLogin}
-              >
+            >
               <Text style={loginStyles.buttonText}>Login</Text>
             </TouchableOpacity>
           </View>
@@ -201,15 +204,15 @@ export class Login extends React.Component {
           <View style={loginStyles.bottomView}>
             <TouchableOpacity 
               style={loginStyles.buttonContainer}
-              onPress={()=>{this.setState({mode: 'login'})}}
-              >
+              onPress={()=>{this.setState({mode: "login"})}}
+            >
               <Text style={loginStyles.buttonText}>Login</Text>
             </TouchableOpacity>
 
             <TouchableOpacity 
               style={loginStyles.buttonContainer}
               onPress={this.onCreateAccount}
-              >
+            >
               <Text style={loginStyles.buttonText}>Create</Text>
             </TouchableOpacity>
           </View>

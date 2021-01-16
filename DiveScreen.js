@@ -1,13 +1,13 @@
-import React from 'react';
-import { Text, View, Platform, TextInput, TouchableOpacity, Alert, Switch } from 'react-native';
-import { AirbnbRating, Divider, CheckBox } from 'react-native-elements';
-import { Picker } from '@react-native-picker/picker';
-// import DateTimePicker from '@react-native-community/datetimepicker';
+import React from "react";
+import { Text, View, Platform, TextInput, TouchableOpacity, Alert, Switch } from "react-native";
+import { AirbnbRating, Divider, CheckBox } from "react-native-elements";
+import { Picker } from "@react-native-picker/picker";
+// import DateTimePicker from "@react-native-community/datetimepicker";
 // import DatePicker from "react-datepicker";
-// import "./node_modules/react-datepicker/dist/react-datepicker.css"; // FLAG ./node_modules/ ?
 
-import { diveStyles } from './Styles';
-import { getDataModel } from './DataModel';
+import { diveStyles } from "./Styles";
+import { getDataModel } from "./DataModel";
+// import "./node_modules/react-datepicker/dist/react-datepicker.css"; // FLAG ./node_modules/ ?
 
 export class DiveAddEdit extends React.Component {
   constructor(props) {
@@ -15,14 +15,14 @@ export class DiveAddEdit extends React.Component {
 
     this.dataModel = getDataModel();
     this.operation = this.props.route.params.operation;
-    // this.operation = 'add'; // FLAG - for testing
+    // this.operation = "add"; // FLAG - for testing
 
-    if (this.operation === 'add') {
+    if (this.operation === "add") {
       this.dive = this.dataModel.createDive(this.props.route.params.diver);
-      // this.dive = this.dataModel.createDive('9lnN5X4zdxeznPfWXp20'); // FLAG - for testing
+      // this.dive = this.dataModel.createDive("9lnN5X4zdxeznPfWXp20"); // FLAG - for testing
     }
 
-    else { // === 'edit'
+    else { // === "edit"
       this.dive = this.props.route.params.dive;
     }
 
@@ -37,7 +37,7 @@ export class DiveAddEdit extends React.Component {
   }
 
   onDelete = async (diveKey) => {
-    if (Platform.OS === 'web') {
+    if (Platform.OS === "web") {
       let response = confirm("Whoa, slow down! This will delete the log forever");
       if (response === true) {
         await this.dataModel.deleteDive(diveKey);
@@ -47,15 +47,15 @@ export class DiveAddEdit extends React.Component {
     
     else { // if running on app, iOS or Android
       Alert.alert(
-        'Whoa, slow down',
-        'This will delete the log forever',
+        "Whoa, slow down",
+        "This will delete the log forever",
         [
           {
-            text: 'Cancel',
-            style: 'cancel'
+            text: "Cancel",
+            style: "cancel"
           },
           {
-            text: 'OK',
+            text: "OK",
             onPress: async () => {
               await this.dataModel.deleteDive(diveKey);
               this.props.navigation.navigate("Timeline");
@@ -68,7 +68,7 @@ export class DiveAddEdit extends React.Component {
   }
 
   onCancel = () => {
-    if (Platform.OS === 'web') {
+    if (Platform.OS === "web") {
       let response = confirm("Heads up, nothing will be saved!");
       if (response === true) {
         this.props.navigation.goBack();
@@ -77,15 +77,15 @@ export class DiveAddEdit extends React.Component {
     
     else { // if running on app, iOS or Android
       Alert.alert(
-        'Heads up',
-        'Nothing will be saved!',
+        "Heads up",
+        "Nothing will be saved!",
         [
           {
-            text: 'Cancel',
-            style: 'cancel'
+            text: "Cancel",
+            style: "cancel"
           },
           {
-            text: 'OK',
+            text: "OK",
             onPress: () => {this.props.navigation.goBack()}
           }
         ],
@@ -95,11 +95,11 @@ export class DiveAddEdit extends React.Component {
   }
 
   onSave = async () => {
-    if (this.operation === 'add') {
+    if (this.operation === "add") {
       await this.dataModel.addDive(this.state.dive);
     }
 
-    else { // === 'edit'
+    else { // === "edit"
       await this.dataModel.editDive(this.state.dive);
     }
 
@@ -111,7 +111,7 @@ export class DiveAddEdit extends React.Component {
       <View style={diveStyles.container}>
         <View style={diveStyles.header}>
           <Text style={diveStyles.headerText}>
-            {this.operation === 'add' ? "Add" : "Edit"}
+            {this.operation === "add" ? "Add" : "Edit"}
           </Text>
         </View>
 
@@ -202,7 +202,7 @@ export class DiveAddEdit extends React.Component {
               />
             </View>
 
-            <Divider style={{ backgroundColor: 'black' }} />
+            <Divider style={{ backgroundColor: "black" }} />
           
             {/* date and time - FLAG*/}
             <View style={diveStyles.fieldRow}>
@@ -214,12 +214,12 @@ export class DiveAddEdit extends React.Component {
                 {/* <Text>{this.date.toDateString()} @ {this.date.getHours()}:{this.date.getMinutes()}</Text> */}
                 {/* <Text>{this.month}/{this.day}/{this.year} @ {this.hour}:{this.minute} {this.date.getHours > 12 ? ("AM") : ("PM")}</Text> */}
                 <Text>
-                  {this.date.toLocaleDateString('en-US', {weekday: 'short', month: 'short', day: 'numeric', year: 'numeric'})}{" "}
-                  @ {this.date.toLocaleTimeString('en-US', {hour: 'numeric', minute: '2-digit', hour12: true, timeZoneName: 'short'})}
+                  {this.date.toLocaleDateString("en-US", {weekday: "short", month: "short", day: "numeric", year: "numeric"})}{" "}
+                  @ {this.date.toLocaleTimeString("en-US", {hour: "numeric", minute: "2-digit", hour12: true, timeZoneName: "short"})}
                 </Text>
               </View>
 
-              {/* {Platform.OS === 'web' ? (
+              {/* {Platform.OS === "web" ? (
                 <DatePicker
                   showTimeSelect
                   selected={this.dive.dateTime}
@@ -302,7 +302,7 @@ export class DiveAddEdit extends React.Component {
               />
             </View>
 
-            <Divider style={{ backgroundColor: 'black' }} />
+            <Divider style={{ backgroundColor: "black" }} />
 
             {/* gas - FLAG*/}
             <View style={diveStyles.fieldRow}>
@@ -312,8 +312,8 @@ export class DiveAddEdit extends React.Component {
 
               <Picker
                 selectedValue={this.state.dive.gas}
-                // prompt={'Test'} // Android only
-                // mode={'dropdown'} // Android only
+                // prompt={"Test"} // Android only
+                // mode={"dropdown"} // Android only
                 onValueChange={(itemValue) => this.setState({dive: {...this.state.dive, gas: itemValue}})}>
                 <Picker.Item label="" value="" />
                 <Picker.Item label="Air" value="air" />
@@ -368,7 +368,7 @@ export class DiveAddEdit extends React.Component {
 
               {/* <CheckBox
                 iconRight
-                title='Favorite'
+                title="Favorite"
                 checked={this.state.dive.favorite}
                 onPress={(value) => this.setState({dive: {...this.state.dive, favorite: value}})}
               /> */}
@@ -402,7 +402,7 @@ export class DiveAddEdit extends React.Component {
               <Text style={diveStyles.footerButtonText}>Cancel</Text>
             </TouchableOpacity>
             
-            {this.operation === 'edit' ? (
+            {this.operation === "edit" ? (
               <TouchableOpacity 
                 style={diveStyles.footerButton}
                 onPress={()=>{this.onDelete(this.dive.key)}}
