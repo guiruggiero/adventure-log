@@ -5,9 +5,9 @@ import { Picker } from "@react-native-picker/picker";
 // import DateTimePicker from "@react-native-community/datetimepicker";
 // import DatePicker from "react-datepicker";
 
-import { diveStyles } from "./Styles";
-import { getDataModel } from "./DataModel";
-// import "./node_modules/react-datepicker/dist/react-datepicker.css"; // FLAG ./node_modules/ ?
+import { diveStyles } from "./DiveStyles";
+import { getDataModel } from "../../DataModel";
+// import "../../node_modules/react-datepicker/dist/react-datepicker.css";
 
 export class DiveAddEdit extends React.Component {
   constructor(props) {

@@ -2,8 +2,9 @@ import React from "react";
 import { Text, View, FlatList, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-import { timelineStyles, colors } from "./Styles";
-import { getDataModel } from "./DataModel";
+import { timelineStyles } from "./TimelineStyles";
+import { colors } from "../GlobalStyles";
+import { getDataModel } from "../../DataModel";
 
 export class Timeline extends React.Component {
   constructor(props) {

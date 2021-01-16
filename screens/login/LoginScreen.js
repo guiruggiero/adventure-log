@@ -1,8 +1,8 @@
 import React from "react";
 import { TextInput, Text, View, Image, TouchableOpacity, KeyboardAvoidingView, Alert} from "react-native";
 
-import { loginStyles } from "./Styles";
-import { getDataModel } from "./DataModel";
+import { loginStyles } from "./LoginStyles";
+import { getDataModel } from "../../DataModel";
 
 export class Login extends React.Component {
   constructor(props) {
@@ -102,7 +102,7 @@ export class Login extends React.Component {
       >
         <View style={loginStyles.topView}>
           <Image 
-            source={require("./assets/logo.png")}
+            source={require("../../assets/logo.png")}
             style={loginStyles.logoImage}
           />
         </View>

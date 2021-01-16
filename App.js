@@ -6,15 +6,15 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import { Login } from "./LoginScreen";
-// import { Settings } from "./SettingsScreen";
-import { Timeline } from "./TimelineScreen";
-import { DiveAddEdit } from "./DiveScreen";
-// import { DiveView } from "./DiveScreen";
-// import { JumpAddEdit } from "./JumpScreen";
-// import { JumpView } from "./JumpScreen";
-// import { Map } from "./MapScreen";
-// import { Stats } from "./StatsScreen";
+import { Login } from "./screens/login/LoginScreen";
+// import { Settings } from "./screens/settings/SettingsScreen";
+import { Timeline } from "./screens/timeline/TimelineScreen";
+import { DiveAddEdit } from "./screens/dive/DiveAddEditScreen";
+// import { DiveView } from "./screens/dive/DiveViewScreen";
+// import { JumpAddEdit } from "./screens/jump/JumpAddEditScreen";
+// import { JumpView } from "./screens/jump/JumpViewScreen";
+// import { Map } from "./screens/map/MapScreen";
+// import { Stats } from "./screens/stats/StatsScreen";
 
 const Stack = createStackNavigator();
 

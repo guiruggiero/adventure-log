@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 
-import { loginStyles } from "./Styles"; // homeStyles
+import { loginStyles } from "./login/LoginStyles"; // homeStyles
 
 export class Home extends React.Component {
   constructor(props) {

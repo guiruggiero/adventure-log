@@ -4,8 +4,8 @@ import { Button } from "react-native-elements";
 import * as Permissions from "expo-permissions";
 import { Camera } from "expo-camera"; // "expo-camera": "~9.1.0", on package.json
 
-import { cameraStyles } from "./Styles";
-import { getDataModel } from "./DataModel";
+import { cameraStyles } from "./CameraStyles";
+import { getDataModel } from "../../DataModel";
 
 export class Cam extends React.Component {
   constructor(props) {
