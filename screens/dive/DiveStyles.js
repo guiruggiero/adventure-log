@@ -46,7 +46,7 @@ export const diveStyles = StyleSheet.create({
             fontSize: 20
           },
           fieldBox: {
-            borderColor: colors.outline,
+            borderColor: colors.gray,
             borderWidth: 1,
             width: "70%", 
             height: 40, 
@@ -65,13 +65,13 @@ export const diveStyles = StyleSheet.create({
         footerButton: {
           flex: 0.2,
           borderRadius: 12,
-          borderColor: colors.outline,
+          borderColor: colors.gray,
           borderWidth: 1,
           justifyContent: "center",
           alignItems: "center",
           padding: 20,
           marginHorizontal: "5%",
-          backgroundColor: colors.primaryDark
+          backgroundColor: colors.blue
         },
           footerButtonText: {
             textAlign: "center",

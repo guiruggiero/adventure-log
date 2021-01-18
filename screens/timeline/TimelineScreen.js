@@ -76,7 +76,7 @@ export class Timeline extends React.Component {
           >
             <Ionicons name="md-add-circle"
               size={80} 
-              color={colors.primaryDark}
+              color={colors.orange}
             />
           </TouchableOpacity>
         </View>

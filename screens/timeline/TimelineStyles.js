@@ -26,7 +26,7 @@ export const timelineStyles = StyleSheet.create({
         separator: {
           width: "100%", 
           height: 1, 
-          backgroundColor: colors.primaryLight
+          backgroundColor: colors.blue
         },
         listDiveContainer: {
           flex: 1,

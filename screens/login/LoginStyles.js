@@ -44,7 +44,7 @@ export const loginStyles = StyleSheet.create({
         },
         inputText: {
           flex: 0.5,
-          borderColor: colors.outline,
+          borderColor: colors.gray,
           paddingLeft: 5,
           borderBottomWidth: 1,
           fontSize: 18,
@@ -60,9 +60,9 @@ export const loginStyles = StyleSheet.create({
           justifyContent: "center",
           alignItems: "center",
           borderWidth: 1,
-          borderColor: colors.outline,
+          borderColor: colors.gray,
           borderRadius: 6,
-          backgroundColor: colors.primary,
+          backgroundColor: colors.blue,
           width: 100,
           height: 50
         },
