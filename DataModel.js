@@ -171,17 +171,17 @@ class DataModel {
       pictureWidth: 0,
       favorite: false,
       rating: 0,
-      latitude: 0,
-      longitude: 0,
+      latitude: "",
+      longitude: "",
 
       // SCUBA diving
       sport: "scubaDiving",
       gas: "",
-      maxDepth: 0,
-      tempBottom: 0,
-      tempSurface: 0,
-      totalTime: 0,
-      weights: 0
+      maxDepth: "",
+      tempBottom: "",
+      tempSurface: "",
+      totalTime: "",
+      weights: ""
     }
 
     return blankDive;
@@ -201,18 +201,18 @@ class DataModel {
       pictureWidth: 0,
       favorite: false,
       rating: 0,
-      latitude: 0,
-      longitude: 0,
+      latitude: "",
+      longitude: "",
 
       // skydiving
       sport: "skydiving",
       type: "",
       category: "",
       staff: "",
-      canopy: 0,
-      altJump: 0,
-      altOpen: 0,
-      freefall: 0
+      canopy: "",
+      altJump: "",
+      altOpen: "",
+      freefall: ""
     }
 
     return blankJump;
