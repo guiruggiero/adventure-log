@@ -1,13 +1,10 @@
 import React from "react";
 import { Text, View, Platform, TextInput, TouchableOpacity, Alert, Switch } from "react-native";
-import { AirbnbRating, Divider, CheckBox } from "react-native-elements";
+import { AirbnbRating, Divider } from "react-native-elements";
 import { Picker } from "@react-native-picker/picker";
-// import DateTimePicker from "@react-native-community/datetimepicker";
-// import DatePicker from "react-datepicker";
 
 import { diveStyles } from "./DiveStyles";
 import { getDataModel } from "../../DataModel";
-// import "../../node_modules/react-datepicker/dist/react-datepicker.css";
 
 export class DiveAddEdit extends React.Component {
   constructor(props) {
@@ -218,16 +215,6 @@ export class DiveAddEdit extends React.Component {
                   @ {this.date.toLocaleTimeString("en-US", {hour: "numeric", minute: "2-digit", hour12: true, timeZoneName: "short"})}
                 </Text>
               </View>
-
-              {/* {Platform.OS === "web" ? (
-                <DatePicker
-                  showTimeSelect
-                  selected={this.dive.dateTime}
-                  onChange={(date) => this.setState({dive: {...this.state.dive, dateTime: date}})}
-                />
-              ):(
-                <View/>
-              )} */}
             </View>
 
             {/* total time */}
@@ -365,13 +352,6 @@ export class DiveAddEdit extends React.Component {
                 value={this.state.dive.favorite}
                 onValueChange={(value) => this.setState({dive: {...this.state.dive, favorite: value}})}
               />
-
-              {/* <CheckBox
-                iconRight
-                title="Favorite"
-                checked={this.state.dive.favorite}
-                onPress={(value) => this.setState({dive: {...this.state.dive, favorite: value}})}
-              /> */}
             </View>
 
             {/* notes */}

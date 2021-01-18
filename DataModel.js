@@ -55,7 +55,7 @@ class DataModel {
     return newUser;
   }
 
-  // dives
+  // logs
   loadDives = async () => {
     this.dives = []; // if called again, avoid duplicates
     let querySnap = await this.divesRef.orderBy("timestamp", "desc").get();
@@ -163,7 +163,7 @@ class DataModel {
     }
   }
 
-  // addDivePicture = async (diveKey, pictureObject) => {
+  addDivePicture = async (diveKey, pictureObject) => {
   //   let fileName = diveKey;
   //   let pictureRef = this.storageRef.child(fileName);
 
@@ -184,117 +184,7 @@ class DataModel {
   //     pictureHeight: pictureObject.height,
   //     pictureWidth: pictureObject.width
   //   });
-  // }
-
-  // // jumps
-  // loadJumps = async () => {
-  //   this.jumps = []; // if called again, avoid duplicates
-  //   let querySnap = await this.jumpsRef.orderBy("timestamp", "desc").get();
-  //   querySnap.forEach(qDocSnap => {
-  //     let key = qDocSnap.id;
-  //     let jump = qDocSnap.data();
-  //     jump.key = key;
-  //     this.jumps.push(jump);
-  //   });
-  // }
-
-  // cleanJumps = (userKey) => {
-  //   let cleanedJumps = [];
-  //   for (let jump of this.jumps) {
-  //     if (jump.skydiver === userKey) {
-  //       cleanedJumps.push(jump);
-  //     }
-  //   }
-  //   this.jumps = cleanedJumps;
-  // }
-
-  // getJumps = () => {
-  //   return this.jumps;
-  // }
-
-  // createJump = (userKey) => {
-  //   let blankJump = {
-  //     country: "",
-  //     skydiver: userKey,
-  //     dropZone: "",
-  //     location: "",
-  //     notes: "",
-  //     canopySize: "",
-  //     staff: "",
-  //     aircraft: "",
-  //     type: "",
-  //     typeDetail: "",
-  //     pictureURL: "",
-  //     timestamp: Date.now(),
-  //     favorite: false,
-  //     rating: 0,
-  //     pictureHeight: 0,
-  //     pictureWidth: 0,
-  //     altJump: 0,
-  //     altOpen: 0,
-  //     freeFall: 0,
-
-  //     latitude: 0,
-  //     longitude: 0
-  //     // coordinates: ???, // geopoint, [41.0153513° N, 83.9355813° W] 
-  //   }
-
-  //   return blankJump;
-  // }
-
-  // addJump = async (newJump) => {
-  //   // add data to FB
-  //   let newJumpDocRef = await this.jumpsRef.add(newJump);
-
-  //   // get new FB ID and add to app data model
-  //   let key = newJumpDocRef.id;
-  //   newJump.key = key;
-  //   this.jumps.push(newJump);
-  // }
-
-  // editJump = async (editedJump) => {
-  //   // update FB
-  //   let editedJumpDocRef = this.jumpsRef.doc(editedJump.key);
-  //   let editedJumpWithoutKey = {...editedJump};
-  //   delete editedJumpWithoutKey.key;
-  //   await editedJumpDocRef.update(editedJumpWithoutKey);
-    
-  //   // update app data model
-  //   let jumpsList = this.jumps;
-  //   let foundIndex = -1;
-  //   for (let idx in jumpsList) {
-  //     if (jumpsList[idx].key === editedJump.key) {
-  //       foundIndex = idx;
-  //       break;
-  //     }
-  //   }
-
-  //   // silently fail if item not found
-  //   if (foundIndex !== -1) {
-  //     jumpsList[foundIndex] = editedJump;
-  //     this.jumps = jumpsList;
-  //   }
-  // }
-
-  // deleteJump = async (jumpKey) => {
-  //   // delete from FB
-  //   let docRef = this.jumpsRef.doc(jumpKey);
-  //   await docRef.delete();
-
-  //   // delete from app data model
-  //   let foundIndex = -1;
-  //   for (let idx in this.jumps) {
-  //     if (this.jumps[idx].key === jumpKey) {
-  //       foundIndex = idx;
-  //       break;
-  //     }
-  //   }
-
-  //   // silently fail if item not found
-  //   if (foundIndex !== -1) {
-  //     this.jumps.splice(foundIndex, 1);
-  //   }
-  // }
+  }
 }
 
 
