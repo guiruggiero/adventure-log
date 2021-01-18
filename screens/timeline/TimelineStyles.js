@@ -7,50 +7,50 @@ export const timelineStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "stretch",
-    justifyContent: "flex-start",
+    justifyContent: "flex-start"
   },
     body: {
       flex: 0.85,
       alignItems: "stretch",
       justifyContent: "center",
       width: "100%",
-      padding: "5%",
+      padding: "5%"
     },
       listContainer: {
         flex: 1,
         flexDirection: "column",
         justifyContent: "flex-start",
         alignItems: "stretch", // this turns out to be important!
-        padding: 15,
+        padding: 15
       },
         separator: {
           width: "100%", 
           height: 1, 
           backgroundColor: colors.blue
         },
-        listDiveContainer: {
+        listLogContainer: {
           flex: 1,
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "center",
-          paddingVertical: 10,
+          paddingVertical: 10
         },
-          listDiveTextContainer: {
+          listLogTextContainer: {
             flex: 0.9,
             flexDirection: "row",
-            justifyContent: "flex-start",
+            justifyContent: "flex-start"
           },
-            listDiveText: {
-              fontSize: 18,
+            listLogText: {
+              fontSize: 18
             },
-          listDiveButtonContainer: {
+          listLogButtonContainer: {
             flex: 0.1,
             flexDirection: "row",
-            justifyContent: "space-between",
+            justifyContent: "space-between"
           },
     footer: {
       flex: 0.15,
       justifyContent: "flex-start",
-      alignItems: "center",
+      alignItems: "center"
     },
 });

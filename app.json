@@ -1,8 +1,10 @@
 {
   "expo": {
-    "name": "adventure-log",
+    "name": "Adventure Log",
     "slug": "adventure-log",
-    "version": "1.0.0",
+    "version": "0.1",
+    "description": "Your adventures, all in one place!",
+    "privacy": "unlisted",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -10,6 +12,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "platforms": ["android", "ios", "web"],
     "updates": {
       "fallbackToCacheTimeout": 0
     },

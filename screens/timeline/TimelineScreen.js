@@ -13,10 +13,10 @@ export class Timeline extends React.Component {
     this.dataModel = getDataModel();
     this.userKey = this.props.route.params.currentUser.key;
     // this.userKey = "9lnN5X4zdxeznPfWXp20"; // FLAG - for testing
-    // this.dataModel.cleanDives(this.userKey); // FLAG - for testing
+    // this.dataModel.cleanLogs(this.userKey); // FLAG - for testing
 
     this.state = {
-      diveList: []
+      logList: []
     };
   }
 
@@ -25,8 +25,8 @@ export class Timeline extends React.Component {
     this.focusUnsubscribe = this.props.navigation.addListener("focus", this.onFocus);
   }
   onFocus = () => {
-    let dives = this.dataModel.getDives();
-    this.setState({diveList: dives});
+    let logs = this.dataModel.getLogs();
+    this.setState({logList: logs});
 
     this.props.navigation.setParams({operation: "none"});
   }
@@ -40,23 +40,23 @@ export class Timeline extends React.Component {
         <View style={timelineStyles.body}>
           <View style={timelineStyles.listContainer}>
             <FlatList
-              data={this.state.diveList.sort(function(a, b) {return b.timestamp - a.timestamp;})}
+              data={this.state.logList.sort(function(a, b) {return b.timestamp - a.timestamp;})}
               ItemSeparatorComponent={()=>(<View style={timelineStyles.separator}/>)}
               renderItem={({item})=>{
                 let date = new Date(item.timestamp);
 
                 return(
                   <TouchableOpacity 
-                    style={timelineStyles.listDiveContainer}
+                    style={timelineStyles.listLogContainer}
                     onPress={()=>{this.props.navigation.navigate("DiveAddEdit", {
                       operation: "edit",
-                      dive: item})
+                      log: item})
                     }}
                   >
-                    <View style={timelineStyles.listDiveTextContainer}> 
-                      <Text style={timelineStyles.listDiveText}>
+                    <View style={timelineStyles.listLogTextContainer}> 
+                      <Text style={timelineStyles.listLogText}>
                         {date.toLocaleDateString("en-US", {month: "2-digit", day: "2-digit", year: "numeric"})}
-                        {" - "}{item.diveSite}, {item.location}{" - "}
+                        {" - "}{item.site}, {item.location}{" - "}
                         {item.rating}{"* "}{item.favorite ? ("[favorite]") : ("")}
                       </Text>
                     </View>
@@ -71,7 +71,7 @@ export class Timeline extends React.Component {
           <TouchableOpacity
             onPress={()=>{this.props.navigation.navigate("DiveAddEdit", {
               operation: "add",
-              diver: this.userKey})
+              userKey: this.userKey})
             }}
           >
             <Ionicons name="md-add-circle"

@@ -7,31 +7,31 @@ export const diveStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "stretch",
-    justifyContent: "flex-start",
+    justifyContent: "flex-start"
   },
     header: {
       flex: 0.05,
       justifyContent: "flex-end",
       alignItems: "center",
       width: "100%",
-      padding: 10,
+      padding: 10
     },
       headerText: {
-        fontSize: 22,
+        fontSize: 22
       },
     body: {
       flex: 0.8,
       alignItems: "stretch",
       justifyContent: "center",
-      width: "100%",
+      width: "100%"
     },
       // imageContainer: { // FLAG
       //   flex: 0.3,
-      //   justifyContent: "flex-start",
+      //   justifyContent: "flex-start"
       // },
       fieldsContainer: {
         flex: 1, // 0.7
-        justifyContent: "flex-start",
+        justifyContent: "flex-start"
       },
         fieldRow: {
           flexDirection: "row",
@@ -51,12 +51,12 @@ export const diveStyles = StyleSheet.create({
             width: "70%", 
             height: 40, 
             fontSize: 20,
-            padding: 5,
+            padding: 5
           },
     footer: {
       flex: 0.15,
       justifyContent: "flex-start",
-      alignItems: "center",
+      alignItems: "center"
     },
       footerButtonContainer: {
         flexDirection: "row",

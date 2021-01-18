@@ -14,20 +14,20 @@ export const loginStyles = StyleSheet.create({
       flex: 0.3,
       alignItems: "center",
       justifyContent: "flex-end",
-      width: "100%",
+      width: "100%"
     },
       logoImage: {
         alignItems: "center",
         justifyContent: "center",
-        width: "50%",
-        height: "50%",
-        resizeMode: "contain",
+        width: "90%",
+        height: "90%",
+        resizeMode: "contain"
       },
     middleView: {
       flex: 0.4,
       justifyContent: "center",
       alignItems: "center",
-      width: "100%",
+      width: "100%"
     },
       inputRow: {
         flexDirection: "row",
@@ -47,7 +47,7 @@ export const loginStyles = StyleSheet.create({
           borderColor: colors.gray,
           paddingLeft: 5,
           borderBottomWidth: 1,
-          fontSize: 18,
+          fontSize: 18
         },
       bottomView: {
         flex: 0.3,

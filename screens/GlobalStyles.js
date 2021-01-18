@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+// import { StyleSheet } from "react-native";
 
 export const colors = {
   blue: "#5F7BA2",

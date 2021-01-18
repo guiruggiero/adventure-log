@@ -12,7 +12,7 @@ export class Cam extends React.Component {
     super(props);
 
     this.dataModel = getDataModel();
-    this.diveKey = this.props.route.params.diveKey;
+    this.logKey = this.props.route.params.logKey;
 
     this.state = {
       hasCameraPermission: null,
@@ -33,7 +33,7 @@ export class Cam extends React.Component {
 
   handleTakePicture = async () => {
     let picData = await this.camera.takePictureAsync();
-    this.dataModel.addDivePicture(this.diveKey, picData);
+    this.dataModel.addLogPicture(this.logKey, picData);
     this.props.navigation.goBack();
   }
 

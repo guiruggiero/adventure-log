@@ -15,29 +15,29 @@ export class DiveAddEdit extends React.Component {
     // this.operation = "add"; // FLAG - for testing
 
     if (this.operation === "add") {
-      this.dive = this.dataModel.createDive(this.props.route.params.diver);
-      // this.dive = this.dataModel.createDive("9lnN5X4zdxeznPfWXp20"); // FLAG - for testing
+      this.log = this.dataModel.createDive(this.props.route.params.userKey);
+      // this.log = this.dataModel.createDive("9lnN5X4zdxeznPfWXp20"); // FLAG - for testing
     }
 
     else { // === "edit"
-      this.dive = this.props.route.params.dive;
+      this.log = this.props.route.params.log;
     }
 
     // converting timestamp into date variables
-    this.date = new Date(this.dive.timestamp);
+    this.date = new Date(this.log.timestamp);
     // [this.month, this.day, this.year] = this.date.toLocaleDateString("en-US").split("/");
     // [this.hour, this.minute] = this.date.toLocaleTimeString("en-US").split(/:| /);
 
     this.state = {
-      dive: this.dive
+      log: this.log
     }
   }
 
-  onDelete = async (diveKey) => {
+  onDelete = async (logKey) => {
     if (Platform.OS === "web") {
       let response = confirm("Whoa, slow down! This will delete the log forever");
       if (response === true) {
-        await this.dataModel.deleteDive(diveKey);
+        await this.dataModel.deleteLog(logKey);
         this.props.navigation.navigate("Timeline");
       }
     }
@@ -54,7 +54,7 @@ export class DiveAddEdit extends React.Component {
           {
             text: "OK",
             onPress: async () => {
-              await this.dataModel.deleteDive(diveKey);
+              await this.dataModel.deleteLog(logKey);
               this.props.navigation.navigate("Timeline");
             }
           }
@@ -93,11 +93,11 @@ export class DiveAddEdit extends React.Component {
 
   onSave = async () => {
     if (this.operation === "add") {
-      await this.dataModel.addDive(this.state.dive);
+      await this.dataModel.addLog(this.state.log);
     }
 
     else { // === "edit"
-      await this.dataModel.editDive(this.state.dive);
+      await this.dataModel.editLog(this.state.log);
     }
 
     this.props.navigation.navigate("Timeline");
@@ -117,7 +117,7 @@ export class DiveAddEdit extends React.Component {
           </View> */}
 
           <View style={diveStyles.fieldsContainer}>
-            {/* dive site */}
+            {/* site */}
             <View style={diveStyles.fieldRow}>
               <Text style={diveStyles.fieldLabel}>
                 Dive site:
@@ -128,8 +128,8 @@ export class DiveAddEdit extends React.Component {
                 autoCapitalize="words"
                 autoCorrect={false}
                 returnKeyType="next"
-                value={this.state.dive.diveSite}
-                onChangeText={(text) => this.setState({dive: {...this.state.dive, diveSite: text}})}
+                value={this.state.log.site}
+                onChangeText={(text) => this.setState({log: {...this.state.log, site: text}})}
               />
             </View>
 
@@ -143,8 +143,8 @@ export class DiveAddEdit extends React.Component {
                 style={diveStyles.fieldBox}
                 autoCapitalize="words"
                 returnKeyType="next"
-                value={this.state.dive.location}
-                onChangeText={(text) => this.setState({dive: {...this.state.dive, location: text}})}
+                value={this.state.log.location}
+                onChangeText={(text) => this.setState({log: {...this.state.log, location: text}})}
               />
             </View>
 
@@ -158,8 +158,8 @@ export class DiveAddEdit extends React.Component {
                 style={diveStyles.fieldBox}
                 autoCapitalize="words"
                 returnKeyType="next"
-                value={this.state.dive.country}
-                onChangeText={(text) => this.setState({dive: {...this.state.dive, country: text}})}
+                value={this.state.log.country}
+                onChangeText={(text) => this.setState({log: {...this.state.log, country: text}})}
               />
             </View>
           
@@ -176,8 +176,8 @@ export class DiveAddEdit extends React.Component {
                 autoCapitalize="none"
                 returnKeyType="next"
                 autoCompleteType="off"
-                value={this.state.dive.latitude}
-                onChangeText={(text) => this.setState({dive: {...this.state.dive, latitude: text}})}
+                value={this.state.log.latitude}
+                onChangeText={(text) => this.setState({log: {...this.state.log, latitude: text}})}
               />
             </View>
 
@@ -194,8 +194,8 @@ export class DiveAddEdit extends React.Component {
                 autoCapitalize="none"
                 returnKeyType="next"
                 autoCompleteType="off"
-                value={this.state.dive.longitude}
-                onChangeText={(text) => this.setState({dive: {...this.state.dive, longitude: text}})}
+                value={this.state.log.longitude}
+                onChangeText={(text) => this.setState({log: {...this.state.log, longitude: text}})}
               />
             </View>
 
@@ -230,8 +230,8 @@ export class DiveAddEdit extends React.Component {
                 autoCapitalize="none"
                 returnKeyType="next"
                 autoCompleteType="off"
-                value={this.state.dive.totalTime}
-                onChangeText={(text) => this.setState({dive: {...this.state.dive, totalTime: text}})}
+                value={this.state.log.totalTime}
+                onChangeText={(text) => this.setState({log: {...this.state.log, totalTime: text}})}
               />
             </View>
 
@@ -248,8 +248,8 @@ export class DiveAddEdit extends React.Component {
                 autoCapitalize="none"
                 returnKeyType="next"
                 autoCompleteType="off"
-                value={this.state.dive.maxDepth}
-                onChangeText={(text) => this.setState({dive: {...this.state.dive, maxDepth: text}})}
+                value={this.state.log.maxDepth}
+                onChangeText={(text) => this.setState({log: {...this.state.log, maxDepth: text}})}
               />
             </View>
 
@@ -266,8 +266,8 @@ export class DiveAddEdit extends React.Component {
                 autoCapitalize="none"
                 returnKeyType="next"
                 autoCompleteType="off"
-                value={this.state.dive.tempSurface}
-                onChangeText={(text) => this.setState({dive: {...this.state.dive, tempSurface: text}})}
+                value={this.state.log.tempSurface}
+                onChangeText={(text) => this.setState({log: {...this.state.log, tempSurface: text}})}
               />
             </View>
 
@@ -284,8 +284,8 @@ export class DiveAddEdit extends React.Component {
                 autoCapitalize="none"
                 returnKeyType="next"
                 autoCompleteType="off"
-                value={this.state.dive.tempBottom}
-                onChangeText={(text) => this.setState({dive: {...this.state.dive, tempBottom: text}})}
+                value={this.state.log.tempBottom}
+                onChangeText={(text) => this.setState({log: {...this.state.log, tempBottom: text}})}
               />
             </View>
 
@@ -298,10 +298,10 @@ export class DiveAddEdit extends React.Component {
               </Text>
 
               <Picker
-                selectedValue={this.state.dive.gas}
+                selectedValue={this.state.log.gas}
                 // prompt={"Test"} // Android only
                 // mode={"dropdown"} // Android only
-                onValueChange={(itemValue) => this.setState({dive: {...this.state.dive, gas: itemValue}})}>
+                onValueChange={(itemValue) => this.setState({log: {...this.state.log, gas: itemValue}})}>
                 <Picker.Item label="" value="" />
                 <Picker.Item label="Air" value="air" />
                 <Picker.Item label="EAN28" value="ean28" />
@@ -323,8 +323,8 @@ export class DiveAddEdit extends React.Component {
                 autoCapitalize="none"
                 returnKeyType="next"
                 autoCompleteType="off"
-                value={this.state.dive.weights}
-                onChangeText={(text) => this.setState({dive: {...this.state.dive, weights: text}})}
+                value={this.state.log.weights}
+                onChangeText={(text) => this.setState({log: {...this.state.log, weights: text}})}
               />
             </View>
 
@@ -336,9 +336,9 @@ export class DiveAddEdit extends React.Component {
 
               <AirbnbRating
                 count={5}
-                defaultRating={this.state.dive.rating}
+                defaultRating={this.state.log.rating}
                 showRating={false}
-                onFinishRating={(rating) => this.setState({dive: {...this.state.dive, rating: rating}})}
+                onFinishRating={(rating) => this.setState({log: {...this.state.log, rating: rating}})}
               />
             </View>
 
@@ -349,8 +349,8 @@ export class DiveAddEdit extends React.Component {
               </Text>
 
               <Switch
-                value={this.state.dive.favorite}
-                onValueChange={(value) => this.setState({dive: {...this.state.dive, favorite: value}})}
+                value={this.state.log.favorite}
+                onValueChange={(value) => this.setState({log: {...this.state.log, favorite: value}})}
               />
             </View>
 
@@ -366,8 +366,8 @@ export class DiveAddEdit extends React.Component {
                 autoCompleteType="off"
                 multiline={true}
                 textAlignVertical="top"
-                value={this.state.dive.notes}
-                onChangeText={(text) => this.setState({dive: {...this.state.dive, notes: text}})}
+                value={this.state.log.notes}
+                onChangeText={(text) => this.setState({log: {...this.state.log, notes: text}})}
               />
             </View>
           </View>
@@ -385,7 +385,7 @@ export class DiveAddEdit extends React.Component {
             {this.operation === "edit" ? (
               <TouchableOpacity 
                 style={diveStyles.footerButton}
-                onPress={()=>{this.onDelete(this.dive.key)}}
+                onPress={()=>{this.onDelete(this.log.key)}}
               >
                 <Text style={diveStyles.footerButtonText}>Delete</Text>
               </TouchableOpacity>

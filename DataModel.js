@@ -12,13 +12,11 @@ class DataModel {
     }
 
     this.usersRef = firebase.firestore().collection("users");
-    this.divesRef = firebase.firestore().collection("dives");
-    // this.jumpsRef = firebase.firestore().collection("jumps");
+    this.logsRef = firebase.firestore().collection("logs");
     // this.storageRef = firebase.storage().ref();
 
     this.users = [];
-    this.dives = [];
-    // this.jumps = [];
+    this.logs = [];
     this.loadUsers();
   }
 
@@ -56,81 +54,53 @@ class DataModel {
   }
 
   // logs
-  loadDives = async () => {
-    this.dives = []; // if called again, avoid duplicates
-    let querySnap = await this.divesRef.orderBy("timestamp", "desc").get();
+  loadLogs = async () => {
+    this.logs = []; // if called again, avoid duplicates
+    let querySnap = await this.logsRef.orderBy("timestamp", "desc").get();
     querySnap.forEach(qDocSnap => {
       let key = qDocSnap.id;
-      let dive = qDocSnap.data();
-      dive.key = key;
-      this.dives.push(dive);
+      let log = qDocSnap.data();
+      log.key = key;
+      this.logs.push(log);
     });
   }
 
-  cleanDives = (userKey) => {
-    let cleanedDives = [];
-    for (let dive of this.dives) {
-      if (dive.diver === userKey) {
-        cleanedDives.push(dive);
+  cleanLogs = (userKey) => {
+    let cleanedLogs = [];
+    for (let log of this.logs) {
+      if (log.user === userKey) {
+        cleanedLogs.push(log);
       }
     }
-    this.dives = cleanedDives;
+    this.logs = cleanedLogs;
   }
 
-  getDives = () => {
-    return this.dives;
+  getLogs = () => {
+    return this.logs;
   }
 
-  createDive = (userKey) => {
-    let blankDive = {
-      country: "",
-      diver: userKey,
-      diveSite: "",
-      gas: "",
-      location: "",
-      notes: "",
-      pictureURL: "",
-      timestamp: Date.now(),
-      favorite: false,
-      rating: 0,
-      pictureHeight: 0,
-      pictureWidth: 0,
-      maxDepth: 0,
-      tempBottom: 0,
-      tempSurface: 0,
-      totalTime: 0,
-      weights: 0,
-
-      latitude: 0,
-      longitude: 0
-      // coordinates: ???, // geopoint, [41.0153513° N, 83.9355813° W] 
-    }
-
-    return blankDive;
-  }
-
-  addDive = async (newDive) => {
+  addLog = async (newLog) => {
     // add data to FB
-    let newDiveDocRef = await this.divesRef.add(newDive);
+    let newLogDocRef = await this.logsRef.add(newLog);
 
     // get new FB ID and add to app data model
-    let key = newDiveDocRef.id;
-    newDive.key = key;
-    this.dives.push(newDive);
+    let key = newLogDocRef.id;
+    newLog.key = key;
+    this.logs.push(newLog);
   }
 
-  editDive = async (editedDive) => {
+  editLog = async (editedLog) => {
     // update FB
-    let editedDiveDocRef = this.divesRef.doc(editedDive.key);
-    let editedDiveWithoutKey = {...editedDive};
-    delete editedDiveWithoutKey.key;
-    await editedDiveDocRef.update(editedDiveWithoutKey);
+    let editedLogDocRef = this.logsRef.doc(editedLog.key);
+    let editedLogWithoutKey = {...editedLog};
+    delete editedLogWithoutKey.key;
+    await editedLogDocRef.update(editedLogWithoutKey);
     
     // update app data model
-    let divesList = this.dives;
+    let logsList = this.logs;
     let foundIndex = -1;
-    for (let idx in divesList) {
-      if (divesList[idx].key === editedDive.key) {
+    for (let idx in logsList) {
+      if (logsList[idx].key === editedLog.key) {
         foundIndex = idx;
         break;
       }
@@ -138,20 +108,20 @@ class DataModel {
 
     // silently fail if item not found
     if (foundIndex !== -1) {
-      divesList[foundIndex] = editedDive;
-      this.dives = divesList;
+      logsList[foundIndex] = editedLog;
+      this.logs = logsList;
     }
   }
 
-  deleteDive = async (diveKey) => {
+  deleteLog = async (logKey) => {
     // delete from FB
-    let docRef = this.divesRef.doc(diveKey);
+    let docRef = this.logsRef.doc(logKey);
     await docRef.delete();
 
     // delete from app data model
     let foundIndex = -1;
-    for (let idx in this.dives) {
-      if (this.dives[idx].key === diveKey) {
+    for (let idx in this.logs) {
+      if (this.logs[idx].key === logKey) {
         foundIndex = idx;
         break;
       }
@@ -159,12 +129,12 @@ class DataModel {
 
     // silently fail if item not found
     if (foundIndex !== -1) {
-      this.dives.splice(foundIndex, 1);
+      this.logs.splice(foundIndex, 1);
     }
   }
 
-  addDivePicture = async (diveKey, pictureObject) => {
-  //   let fileName = diveKey;
+  addLogPicture = async (logKey, pictureObject) => {
+  //   let fileName = logKey;
   //   let pictureRef = this.storageRef.child(fileName);
 
   //   // fetch picture object from the local filesystem
@@ -177,13 +147,75 @@ class DataModel {
   //   // get picture URL
   //   let downloadURL = await pictureRef.getDownloadURL();
     
-  //   // update dive with picture and store in FB
-  //   let diveRef = this.divesRef.doc(diveKey);
-  //   await diveRef.update({
+  //   // update log with picture and store in FB
+  //   let logRef = this.logsRef.doc(logKey);
+  //   await logRef.update({
   //     pictureURL: downloadURL,
   //     pictureHeight: pictureObject.height,
   //     pictureWidth: pictureObject.width
   //   });
+  }
+
+  // sport-specific
+  createDive = (userKey) => {
+    let blankDive = {
+      // same for all logs
+      user: userKey,
+      timestamp: Date.now(),
+      site: "",
+      location: "",
+      country: "",
+      notes: "",
+      pictureURL: "",
+      pictureHeight: 0,
+      pictureWidth: 0,
+      favorite: false,
+      rating: 0,
+      latitude: 0,
+      longitude: 0,
+
+      // SCUBA diving
+      sport: "scubaDiving",
+      gas: "",
+      maxDepth: 0,
+      tempBottom: 0,
+      tempSurface: 0,
+      totalTime: 0,
+      weights: 0
+    }
+
+    return blankDive;
+  }
+
+  createJump = (userKey) => {
+    let blankJump = {
+      // same for all logs
+      user: userKey,
+      timestamp: Date.now(),
+      site: "",
+      location: "",
+      country: "",
+      notes: "",
+      pictureURL: "",
+      pictureHeight: 0,
+      pictureWidth: 0,
+      favorite: false,
+      rating: 0,
+      latitude: 0,
+      longitude: 0,
+
+      // skydiving
+      sport: "skydiving",
+      type: "",
+      category: "",
+      staff: "",
+      canopy: 0,
+      altJump: 0,
+      altOpen: 0,
+      freefall: 0
+    }
+
+    return blankJump;
   }
 }
 

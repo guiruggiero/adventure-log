@@ -24,8 +24,7 @@ export class Login extends React.Component {
     this.focusUnsubscribe = this.props.navigation.addListener("focus", this.onFocus);
   }
   onFocus = () => {
-    this.dataModel.loadDives();
-    // this.dataModel.loadJumps();
+    this.dataModel.loadLogs();
   }
   componentWillUnmount = () => {
     this.focusUnsubscribe();
@@ -59,8 +58,7 @@ export class Login extends React.Component {
       this.state.displayNameInput
     );
 
-    this.dataModel.cleanDives(); // wipe data model clean
-    // this.dataModel.cleanJumps(); // wipe data model clean
+    this.dataModel.cleanLogs(); // wipe data model clean
     this.props.navigation.navigate("Timeline", { // Home
       currentUser: newUser
     });
@@ -74,8 +72,7 @@ export class Login extends React.Component {
     for (let user of users) {
       if (user.email === email) {
         if (user.password === pass) {
-          this.dataModel.cleanDives(user.key); // remove dives from other users
-          // this.dataModel.cleanJumps(user.key); // remove jumps from other users
+          this.dataModel.cleanLogs(user.key); // remove logs from other users
           this.props.navigation.navigate("Timeline", { // Home
             currentUser: user
           });
