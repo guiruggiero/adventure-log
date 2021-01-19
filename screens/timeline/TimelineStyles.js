@@ -5,16 +5,39 @@ import { colors } from "../GlobalStyles";
 export const timelineStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#FFFFFF",
     alignItems: "stretch",
     justifyContent: "flex-start"
   },
+    // header: {
+    //   flex: 0.15,
+    //   flexDirection: "row",
+    //   alignItems: "stretch",
+    //   justifyContent: "center",
+    //   width: "100%",
+    //   padding: "2.5%"
+    // },
+    //   menuIcon: {
+    //     flex: 0.15,
+    //     alignItems: "stretch",
+    //     justifyContent: "center",
+    //   },
+    //   searchBar: {
+    //     flex: 0.70,
+    //     alignItems: "stretch",
+    //     justifyContent: "center",
+    //   },
+    //   filterIcon: {
+    //     flex: 0.15,
+    //     alignItems: "stretch",
+    //     justifyContent: "center",
+    //   },
     body: {
       flex: 0.85,
       alignItems: "stretch",
       justifyContent: "center",
       width: "100%",
-      padding: "5%"
+      padding: "2.5%"
     },
       listContainer: {
         flex: 1,
@@ -53,4 +76,11 @@ export const timelineStyles = StyleSheet.create({
       justifyContent: "flex-start",
       alignItems: "center"
     },
+      fab: {
+        position: 'absolute',
+        margin: 40,
+        right: 0,
+        bottom: 0,
+        backgroundColor: colors.orange
+      }
 });

@@ -3,6 +3,7 @@
 // Developed by Gui Ruggiero
 
 import React from "react";
+import { Provider } from 'react-native-paper';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -25,24 +26,26 @@ const Stack = createStackNavigator();
 
 function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator 
-        initialRouteName="Login" // FLAG - for testing
-        screenOptions={{
-          headerShown: false
-        }}
-      >
-        <Stack.Screen name="Login" component={Login} />
-        {/* <Stack.Screen name="Settings" component={Settings} /> */}
-        <Stack.Screen name="Timeline" component={Timeline} />
-        <Stack.Screen name="DiveAddEdit" component={DiveAddEdit} />
-        {/* <Stack.Screen name="DiveView" component={DiveView} /> */}
-        {/* <Stack.Screen name="JumpAddEdit" component={JumpAddEdit} /> */}
-        {/* <Stack.Screen name="JumpView" component={JumpView} /> */}
-        {/* <Stack.Screen name="Map" component={Map} /> */}
-        {/* <Stack.Screen name="Stats" component={Stats} /> */}
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider>
+      <NavigationContainer>
+        <Stack.Navigator 
+          initialRouteName="Login" // FLAG - for testing
+          screenOptions={{
+            headerShown: false
+          }}
+        >
+          <Stack.Screen name="Login" component={Login} />
+          {/* <Stack.Screen name="Settings" component={Settings} /> */}
+          <Stack.Screen name="Timeline" component={Timeline} />
+          <Stack.Screen name="DiveAddEdit" component={DiveAddEdit} />
+          {/* <Stack.Screen name="DiveView" component={DiveView} /> */}
+          {/* <Stack.Screen name="JumpAddEdit" component={JumpAddEdit} /> */}
+          {/* <Stack.Screen name="JumpView" component={JumpView} /> */}
+          {/* <Stack.Screen name="Map" component={Map} /> */}
+          {/* <Stack.Screen name="Stats" component={Stats} /> */}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 

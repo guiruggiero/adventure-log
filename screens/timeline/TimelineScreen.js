@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View, FlatList, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { Searchbar, FAB, Portal, Provider } from "react-native-paper";
 
 import { timelineStyles } from "./TimelineStyles";
 import { colors } from "../GlobalStyles";
@@ -16,7 +17,9 @@ export class Timeline extends React.Component {
     // this.dataModel.cleanLogs(this.userKey); // FLAG - for testing
 
     this.state = {
-      logList: []
+      logList: [],
+      searchQuery: "",
+      fabOpen: false
     };
   }
 
@@ -34,14 +37,57 @@ export class Timeline extends React.Component {
     this.focusUnsubscribe();
   }
 
+  // onSearchChange = (query) => {
+  //   this.setState({searchQuery: query});
+  // }
+
+  // onFABStateChange = (open) => {
+  //   this.setState({fabOpen: open})
+  // }
+  
   render() {
     return (
       <View style={timelineStyles.container}>
+        {/* <View style={timelineStyles.header}>
+          <View style={timelineStyles.menuIcon}>
+            <TouchableOpacity
+              // onPress={()=>{this.props.navigation.navigate("Menu")}}
+            >
+              <Ionicons name="menu"
+                size={24} 
+                color={colors.blue}
+              />
+            </TouchableOpacity>
+          </View>
+
+          <View style={timelineStyles.searchBar}>
+            <Searchbar
+              placeholder="Search"
+              value={this.state.searchQuery}
+              onChangeText={this.onSearchChange}
+            />
+          </View>
+
+          <View style={timelineStyles.filterIcon}>
+            <TouchableOpacity
+                // onPress={()=>{this.props.navigation.navigate("Menu")}}
+              >
+                <Ionicons name="filter"
+                  size={24} 
+                  color={colors.blue}
+                />
+              </TouchableOpacity>
+          </View>
+        </View> */}
+
         <View style={timelineStyles.body}>
           <View style={timelineStyles.listContainer}>
             <FlatList
               data={this.state.logList.sort(function(a, b) {return b.timestamp - a.timestamp;})}
               ItemSeparatorComponent={()=>(<View style={timelineStyles.separator}/>)}
+              // initialNumToRender={10} // how many fit in a large screen?
+              // maxToRenderPerBatch={10}
+              // windowSize={21}
               renderItem={({item})=>{
                 let date = new Date(item.timestamp);
 
@@ -68,17 +114,52 @@ export class Timeline extends React.Component {
         </View>
 
         <View style={timelineStyles.footer}>
-          <TouchableOpacity
-            onPress={()=>{this.props.navigation.navigate("DiveAddEdit", {
+          {/* FLAG - floats over longer lists? */}
+          <FAB
+            style={timelineStyles.fab}
+            icon="plus-thick"
+            color="#FFFFFF"
+            onPress={() => {this.props.navigation.navigate("DiveAddEdit", {
               operation: "add",
               userKey: this.userKey})
             }}
-          >
-            <Ionicons name="md-add-circle"
-              size={80} 
-              color={colors.orange}
-            />
-          </TouchableOpacity>
+          />
+
+          {/* <Provider>
+            <Portal>
+              <FAB.Group
+                open={this.fabOpen}
+                icon={this.fabOpen ? "plus" : "plus-thick"}
+                color={this.fabOpen ? colors.orange : "#FFFFFF"}
+                fabStyle={this.fabOpen ? {backgroundColor: "#FFFFFF"} : {backgroundColor: colors.orange}}
+                actions={[
+                  {
+                    icon: "parachute",
+                    color: "#FFFFFF",
+                    style: {backgroundColor: colors.orange},
+                    label: "Skydive",
+                    onPress: () => console.log("Pressed Skydive")
+                  },
+                  {
+                    icon: "diving-scuba-tank",
+                    color: "#FFFFFF",
+                    style: {backgroundColor: colors.orange},
+                    label: "SCUBA dive",
+                    onPress: () => {this.props.navigation.navigate("DiveAddEdit", {
+                      operation: "add",
+                      userKey: this.userKey})
+                    }
+                  },
+                ]}
+                onStateChange={this.onFABStateChange}
+                onPress={() => {
+                  if (this.fabOpen) {
+                    // do something if the speed dial is open
+                  }
+                }}
+              />
+            </Portal>
+          </Provider> */}
         </View>
       </View>
     );
