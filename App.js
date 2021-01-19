@@ -16,6 +16,11 @@ import { DiveAddEdit } from "./screens/dive/DiveAddEditScreen";
 // import { Map } from "./screens/map/MapScreen";
 // import { Stats } from "./screens/stats/StatsScreen";
 
+// FLAG - for testing
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Setting a timer']);
+LogBox.ignoreLogs(['Remote debugger is']);
+
 const Stack = createStackNavigator();
 
 function App() {
