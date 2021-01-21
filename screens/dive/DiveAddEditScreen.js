@@ -1,4 +1,5 @@
 import React from "react";
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, View, Platform, TextInput, TouchableOpacity, Alert, Switch } from "react-native";
 import { AirbnbRating, Divider } from "react-native-elements";
 import { Picker } from "@react-native-picker/picker";
@@ -105,7 +106,7 @@ export class DiveAddEdit extends React.Component {
 
   render() {
     return (
-      <View style={diveStyles.container}>
+      <SafeAreaView style={diveStyles.container}>
         <View style={diveStyles.header}>
           <Text style={diveStyles.headerText}>
             {this.operation === "add" ? "Add" : "Edit"}
@@ -401,7 +402,7 @@ export class DiveAddEdit extends React.Component {
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }

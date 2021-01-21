@@ -1,25 +1,28 @@
 import React from "react";
-import { Text, View, FlatList, TouchableOpacity } from "react-native";
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Text, View, FlatList, Pressable, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Searchbar, FAB, Portal, Provider } from "react-native-paper";
 
 import { timelineStyles } from "./TimelineStyles";
 import { colors } from "../GlobalStyles";
 import { getDataModel } from "../../DataModel";
+import { color } from "react-native-reanimated";
 
 export class Timeline extends React.Component {
   constructor(props) {
     super(props);
 
     this.dataModel = getDataModel();
-    this.userKey = this.props.route.params.currentUser.key;
-    // this.userKey = "9lnN5X4zdxeznPfWXp20"; // FLAG - for testing
-    // this.dataModel.cleanLogs(this.userKey); // FLAG - for testing
+    // this.userKey = this.props.route.params.currentUser.key;
+    this.userKey = "9lnN5X4zdxeznPfWXp20"; // FLAG - for testing
+    this.dataModel.loadLogs(); // FLAG - for testing
+    this.dataModel.cleanLogs(this.userKey); // FLAG - for testing
 
     this.state = {
-      logList: [],
-      searchQuery: "",
-      fabOpen: false
+      logList: []
+      // searchQuery: "",
+      // fabOpen: false
     };
   }
 
@@ -47,17 +50,17 @@ export class Timeline extends React.Component {
   
   render() {
     return (
-      <View style={timelineStyles.container}>
+      <SafeAreaView style={timelineStyles.container}>
         {/* <View style={timelineStyles.header}>
           <View style={timelineStyles.menuIcon}>
-            <TouchableOpacity
+            <Pressable
               // onPress={()=>{this.props.navigation.navigate("Menu")}}
             >
               <Ionicons name="menu"
                 size={24} 
                 color={colors.blue}
               />
-            </TouchableOpacity>
+            </Pressable>
           </View>
 
           <View style={timelineStyles.searchBar}>
@@ -69,52 +72,51 @@ export class Timeline extends React.Component {
           </View>
 
           <View style={timelineStyles.filterIcon}>
-            <TouchableOpacity
+            <Pressable
                 // onPress={()=>{this.props.navigation.navigate("Menu")}}
               >
                 <Ionicons name="filter"
                   size={24} 
                   color={colors.blue}
                 />
-              </TouchableOpacity>
+              </Pressable>
           </View>
         </View> */}
 
         <View style={timelineStyles.body}>
-          <View style={timelineStyles.listContainer}>
-            <FlatList
-              data={this.state.logList.sort(function(a, b) {return b.timestamp - a.timestamp;})}
-              ItemSeparatorComponent={()=>(<View style={timelineStyles.separator}/>)}
-              // initialNumToRender={10} // how many fit in a large screen?
-              // maxToRenderPerBatch={10}
-              // windowSize={21}
-              renderItem={({item})=>{
-                let date = new Date(item.timestamp);
+          <FlatList
+            data={this.state.logList.sort(function(a, b) {return b.timestamp - a.timestamp;})}
+            showsVerticalScrollIndicator={false}
+            // initialNumToRender={20} // how many fit in a large screen?
+            // maxToRenderPerBatch={10}
+            // windowSize={21}
+            renderItem={({item})=>{
+              let date = new Date(item.timestamp);
 
-                return(
-                  <TouchableOpacity 
-                    style={timelineStyles.listLogContainer}
-                    onPress={()=>{this.props.navigation.navigate("DiveAddEdit", {
-                      operation: "edit",
-                      log: item})
-                    }}
-                  >
-                    <View style={timelineStyles.listLogTextContainer}> 
-                      <Text style={timelineStyles.listLogText}>
-                        {date.toLocaleDateString("en-US", {month: "2-digit", day: "2-digit", year: "numeric"})}
-                        {" - "}{item.site}, {item.location}{" - "}
-                        {item.rating}{"* "}{item.favorite ? ("[favorite]") : ("")}
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                );
-              }}
-            />
-          </View>
+              return(
+                <Pressable 
+                  style={timelineStyles.card}
+                  android_ripple={{color: colors.maize}}
+                  onPress={()=>{this.props.navigation.navigate("DiveAddEdit", {
+                    operation: "edit",
+                    log: item})
+                  }}
+                >
+                  <View style={timelineStyles.body}>
+
+                  </View>
+                  {/* <Text style={timelineStyles.listLogText}>
+                    {date.toLocaleDateString("en-US", {month: "2-digit", day: "2-digit", year: "numeric"})}
+                    {" - "}{item.site}, {item.location}{" - "}
+                    {item.rating}{"* "}{item.favorite ? ("[favorite]") : ("")}
+                  </Text> */}
+                </Pressable>
+              );
+            }}
+          />
         </View>
 
-        <View style={timelineStyles.footer}>
-          {/* FLAG - floats over longer lists? */}
+        <View>
           <FAB
             style={timelineStyles.fab}
             icon="plus-thick"
@@ -161,7 +163,7 @@ export class Timeline extends React.Component {
             </Portal>
           </Provider> */}
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }

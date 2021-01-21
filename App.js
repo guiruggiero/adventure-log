@@ -29,10 +29,8 @@ function App() {
     <Provider>
       <NavigationContainer>
         <Stack.Navigator 
-          initialRouteName="Login" // FLAG - for testing
-          screenOptions={{
-            headerShown: false
-          }}
+          initialRouteName="Timeline" // FLAG - for testing
+          screenOptions={{headerShown: false}}
         >
           <Stack.Screen name="Login" component={Login} />
           {/* <Stack.Screen name="Settings" component={Settings} /> */}
