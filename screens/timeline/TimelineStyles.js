@@ -21,76 +21,73 @@ export const timelineStyles = StyleSheet.create({
     //   menuIcon: {
     //     flex: 0.15,
     //     alignItems: "stretch",
-    //     justifyContent: "center",
+    //     justifyContent: "center"
     //   },
     //   searchBar: {
     //     flex: 0.70,
     //     alignItems: "stretch",
-    //     justifyContent: "center",
+    //     justifyContent: "center"
     //   },
     //   filterIcon: {
     //     flex: 0.15,
     //     alignItems: "stretch",
-    //     justifyContent: "center",
+    //     justifyContent: "center"
     //   },
     body: {
       flex: 1,
       flexDirection: "column",
       justifyContent: "flex-start",
       alignItems: "stretch",
-      marginHorizontal: "1%"
+      marginHorizontal: 10
     },
       card: {
         flex: 1,
         flexDirection: "row",
         justifyContent: "flex-start",
         alignItems: "center",
-        marginBottom: 20,
-        padding: 30,
-        // backgroundColor: colors.gray,
-        borderRadius: 2,
+        marginVertical: 10, // between cards
+        borderRadius: 5,
         elevation: 3, // Android
         shadowOpacity: 0.23, // iOS
         shadowRadius: 2.62, // iOS
-        shadowOffset: { width: 0, height: 2 } // iOS
+        shadowOffset: {width: 0, height: 3} // iOS
       },
         iconDate: {
-          flex: 0.2,
+          flex: 0.15,
           flexDirection: "column",
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
+          marginVertical: 15,
+          marginLeft: 15
         },
-          icon: {
-
+          monthDay: {
+            fontSize: 16,
+            fontWeight: "bold"
           },
-          date: {
-
-          },
-        textContainer: {
-          flex: 0.8,
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center"
-        },
-          textSite: {
-            flex: 0.7,
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
+          year: {
             fontSize: 18
           },
-          textLocation: {
-            flex: 0.3,
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: 12
+        textContainer: {
+          flex: 0.85,
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "flex-start",
+          margin: 15
+        },
+          textSite: {
+            fontSize: 28,
+            fontWeight: "bold"
           },
-    fab: {
+          textLocation: {
+            fontSize: 23
+          },
+    footer: {
       position: 'absolute',
       margin: 35,
       right: 0,
-      bottom: 0,
-      backgroundColor: colors.orange
-    }
+      bottom: 0
+    },
+      fab: {
+        backgroundColor: colors.orange
+      }
 });

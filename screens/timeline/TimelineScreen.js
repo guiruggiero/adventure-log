@@ -1,23 +1,23 @@
 import React from "react";
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Text, View, FlatList, Pressable, TouchableOpacity } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { Text, View, FlatList, Pressable } from "react-native";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Searchbar, FAB, Portal, Provider } from "react-native-paper";
+import getUnicodeFlagIcon from "country-flag-icons/unicode";
 
 import { timelineStyles } from "./TimelineStyles";
 import { colors } from "../GlobalStyles";
 import { getDataModel } from "../../DataModel";
-import { color } from "react-native-reanimated";
 
 export class Timeline extends React.Component {
   constructor(props) {
     super(props);
 
     this.dataModel = getDataModel();
-    // this.userKey = this.props.route.params.currentUser.key;
-    this.userKey = "9lnN5X4zdxeznPfWXp20"; // FLAG - for testing
-    this.dataModel.loadLogs(); // FLAG - for testing
-    this.dataModel.cleanLogs(this.userKey); // FLAG - for testing
+    this.userKey = this.props.route.params.currentUser.key;
+    // this.userKey = "9lnN5X4zdxeznPfWXp20"; // FLAG - for testing
+    // this.dataModel.loadLogs(); // FLAG - for testing
+    // this.dataModel.cleanLogs(this.userKey); // FLAG - for testing
 
     this.state = {
       logList: []
@@ -56,7 +56,8 @@ export class Timeline extends React.Component {
             <Pressable
               // onPress={()=>{this.props.navigation.navigate("Menu")}}
             >
-              <Ionicons name="menu"
+              <Ionicons
+                name="menu"
                 size={24} 
                 color={colors.blue}
               />
@@ -75,8 +76,9 @@ export class Timeline extends React.Component {
             <Pressable
                 // onPress={()=>{this.props.navigation.navigate("Menu")}}
               >
-                <Ionicons name="filter"
-                  size={24} 
+                <Ionicons
+                  name="filter"
+                  size={24}
                   color={colors.blue}
                 />
               </Pressable>
@@ -96,30 +98,51 @@ export class Timeline extends React.Component {
               return(
                 <Pressable 
                   style={timelineStyles.card}
-                  android_ripple={{color: colors.maize}}
+                  android_ripple={{color: colors.gray}}
                   onPress={()=>{this.props.navigation.navigate("DiveAddEdit", {
                     operation: "edit",
                     log: item})
                   }}
                 >
-                  <View style={timelineStyles.body}>
+                  <View style={timelineStyles.iconDate}>
+                    <MaterialCommunityIcons
+                      name={item.sport === "scubaDiving" ? "diving-scuba-tank" : "parachute"}
+                      size={36}
+                      color={colors.blue}
+                    />
 
+                    <Text style={timelineStyles.monthDay}>
+                      {date.toLocaleDateString("en-US", {month: "short", day: "numeric"})}
+                    </Text>
+
+                    <Text style={timelineStyles.year}>
+                      {date.toLocaleDateString("en-US", {year: "numeric"})}
+                    </Text>
                   </View>
-                  {/* <Text style={timelineStyles.listLogText}>
-                    {date.toLocaleDateString("en-US", {month: "2-digit", day: "2-digit", year: "numeric"})}
-                    {" - "}{item.site}, {item.location}{" - "}
-                    {item.rating}{"* "}{item.favorite ? ("[favorite]") : ("")}
-                  </Text> */}
+
+                  <View style={timelineStyles.textContainer}>
+                    <Text style={timelineStyles.textSite}>
+                      {item.site}
+                    </Text>
+
+                    <Text style={timelineStyles.textLocation}>
+                      {item.location}
+                      
+                      {item.location === "" ? "" : "  "}
+                      
+                      {item.country === "" ? "" : getUnicodeFlagIcon(item.country)}
+                    </Text>
+                  </View>
                 </Pressable>
               );
             }}
           />
         </View>
 
-        <View>
+        <View style={timelineStyles.footer}>
           <FAB
-            style={timelineStyles.fab}
             icon="plus-thick"
+            style={timelineStyles.fab}
             color="#FFFFFF"
             onPress={() => {this.props.navigation.navigate("DiveAddEdit", {
               operation: "add",
