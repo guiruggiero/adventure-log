@@ -5,10 +5,10 @@ import { colors } from "../GlobalStyles";
 export const timelineStyles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
+    flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "stretch",
-    backgroundColor: "#FFFFFF"
+    backgroundColor: "#FFFFFF",
   },
     // header: {
     //   flex: 0.15,
@@ -16,29 +16,29 @@ export const timelineStyles = StyleSheet.create({
     //   alignItems: "stretch",
     //   justifyContent: "center",
     //   width: "100%",
-    //   padding: "2.5%"
+    //   padding: "2.5%",
     // },
     //   menuIcon: {
     //     flex: 0.15,
     //     alignItems: "stretch",
-    //     justifyContent: "center"
+    //     justifyContent: "center",
     //   },
     //   searchBar: {
     //     flex: 0.70,
     //     alignItems: "stretch",
-    //     justifyContent: "center"
+    //     justifyContent: "center",
     //   },
     //   filterIcon: {
     //     flex: 0.15,
     //     alignItems: "stretch",
-    //     justifyContent: "center"
+    //     justifyContent: "center",
     //   },
     body: {
       flex: 1,
       flexDirection: "column",
       justifyContent: "flex-start",
       alignItems: "stretch",
-      marginHorizontal: 10
+      marginHorizontal: 10,
     },
       card: {
         flex: 1,
@@ -50,7 +50,7 @@ export const timelineStyles = StyleSheet.create({
         elevation: 3, // Android
         shadowOpacity: 0.23, // iOS
         shadowRadius: 2.62, // iOS
-        shadowOffset: {width: 0, height: 3} // iOS
+        shadowOffset: {width: 0, height: 3}, // iOS
       },
         iconDate: {
           flex: 0.15,
@@ -58,36 +58,36 @@ export const timelineStyles = StyleSheet.create({
           justifyContent: "center",
           alignItems: "center",
           marginVertical: 15,
-          marginLeft: 15
+          marginLeft: 15,
         },
           monthDay: {
             fontSize: 16,
-            fontWeight: "bold"
+            fontWeight: "bold",
           },
           year: {
-            fontSize: 18
+            fontSize: 18,
           },
         textContainer: {
           flex: 0.85,
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "flex-start",
-          margin: 15
+          margin: 15,
         },
           textSite: {
             fontSize: 28,
-            fontWeight: "bold"
+            fontWeight: "bold",
           },
           textLocation: {
-            fontSize: 23
+            fontSize: 23,
           },
     footer: {
-      position: 'absolute',
+      position: "absolute",
       margin: 35,
       right: 0,
-      bottom: 0
+      bottom: 0,
     },
       fab: {
-        backgroundColor: colors.orange
+        backgroundColor: colors.orange,
       }
 });

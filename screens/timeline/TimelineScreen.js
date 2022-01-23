@@ -1,13 +1,13 @@
-import React from "react";
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Text, View, FlatList, Pressable } from "react-native";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
-import { Searchbar, FAB, Portal, Provider } from "react-native-paper";
 import getUnicodeFlagIcon from "country-flag-icons/unicode";
+import React, { useCallback } from "react";
+import { Text, View, FlatList, Pressable } from "react-native";
+import { Searchbar, FAB, Portal, Provider } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-import { timelineStyles } from "./TimelineStyles";
-import { colors } from "../GlobalStyles";
 import { getDataModel } from "../../DataModel";
+import { colors } from "../GlobalStyles";
+import { timelineStyles } from "./TimelineStyles";
 
 export class Timeline extends React.Component {
   constructor(props) {
@@ -20,7 +20,7 @@ export class Timeline extends React.Component {
     // this.dataModel.cleanLogs(this.userKey); // FLAG - for testing
 
     this.state = {
-      logList: []
+      logList: [],
       // searchQuery: "",
       // fabOpen: false
     };
@@ -29,16 +29,65 @@ export class Timeline extends React.Component {
   // execute every time the screen receives focus
   componentDidMount = () => {
     this.focusUnsubscribe = this.props.navigation.addListener("focus", this.onFocus);
-  }
+  };
   onFocus = () => {
     let logs = this.dataModel.getLogs();
     this.setState({logList: logs});
 
     this.props.navigation.setParams({operation: "none"});
-  }
+  };
   componentWillUnmount = () => {
     this.focusUnsubscribe();
-  }
+  };
+
+  // renderItem = useCallback(
+  //   ({item})=>{
+  //     let date = new Date(item.timestamp);
+  //     let [month, day, year] = date.toLocaleDateString("en-US",
+  //       {month: "short", day: "numeric", year: "numeric"}).split(" ");
+
+  //     return(
+  //       <Pressable
+  //         style={timelineStyles.card}
+  //         android_ripple={{color: colors.gray}}
+  //         onPress={()=>{this.props.navigation.navigate("DiveAddEdit", {
+  //           operation: "edit",
+  //           log: item})
+  //         }}
+  //       >
+  //         <View style={timelineStyles.iconDate}>
+  //           <MaterialCommunityIcons
+  //             name={item.sport === "scubaDiving" ? "diving-scuba-flag" : "parachute"}
+  //             size={36}
+  //             color={colors.blue}
+  //           />
+
+  //           <Text style={timelineStyles.monthDay}>
+  //             {month + " " + day.slice(0, -1)}
+  //           </Text>
+
+  //           <Text style={timelineStyles.year}>
+  //             {year}
+  //           </Text>
+  //         </View>
+
+  //         <View style={timelineStyles.textContainer}>
+  //           <Text style={timelineStyles.textSite}>
+  //             {item.site}
+  //           </Text>
+
+  //           <Text style={timelineStyles.textLocation}>
+  //             {item.location}
+              
+  //             {item.location === "" ? "" : "  "}
+              
+  //             {item.country === "" ? "" : getUnicodeFlagIcon(item.country)}
+  //           </Text>
+  //         </View>
+  //       </Pressable>
+  //     );
+  //   }, []
+  // );
 
   // onSearchChange = (query) => {
   //   this.setState({searchQuery: query});
@@ -89,12 +138,14 @@ export class Timeline extends React.Component {
           <FlatList
             data={this.state.logList.sort(function(a, b) {return b.timestamp - a.timestamp;})}
             showsVerticalScrollIndicator={false}
-            // initialNumToRender={20} // how many fit in a large screen?
-            // maxToRenderPerBatch={10}
             // windowSize={21}
+            // initialNumToRender={20} // enough to fill the viewport in all supported devices
+            // maxToRenderPerBatch={10}
             renderItem={({item})=>{
               let date = new Date(item.timestamp);
-
+              let [month, day, year] = date.toLocaleDateString("en-US",
+                {month: "short", day: "numeric", year: "numeric"}).split(" ");
+        
               return(
                 <Pressable 
                   style={timelineStyles.card}
@@ -106,25 +157,25 @@ export class Timeline extends React.Component {
                 >
                   <View style={timelineStyles.iconDate}>
                     <MaterialCommunityIcons
-                      name={item.sport === "scubaDiving" ? "diving-scuba-tank" : "parachute"}
+                      name={item.sport === "scubaDiving" ? "diving-scuba-flag" : "parachute"}
                       size={36}
                       color={colors.blue}
                     />
-
+        
                     <Text style={timelineStyles.monthDay}>
-                      {date.toLocaleDateString("en-US", {month: "short", day: "numeric"})}
+                      {month + " " + day.slice(0, -1)}
                     </Text>
-
+        
                     <Text style={timelineStyles.year}>
-                      {date.toLocaleDateString("en-US", {year: "numeric"})}
+                      {year}
                     </Text>
                   </View>
-
+        
                   <View style={timelineStyles.textContainer}>
                     <Text style={timelineStyles.textSite}>
                       {item.site}
                     </Text>
-
+        
                     <Text style={timelineStyles.textLocation}>
                       {item.location}
                       
@@ -136,6 +187,7 @@ export class Timeline extends React.Component {
                 </Pressable>
               );
             }}
+            // renderItem={this.renderItem}
           />
         </View>
 
@@ -166,7 +218,7 @@ export class Timeline extends React.Component {
                     onPress: () => console.log("Pressed Skydive")
                   },
                   {
-                    icon: "diving-scuba-tank",
+                    icon: "diving-scuba-flag",
                     color: "#FFFFFF",
                     style: {backgroundColor: colors.orange},
                     label: "SCUBA dive",
